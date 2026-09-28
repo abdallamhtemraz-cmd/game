@@ -1,0 +1,2 @@
+-- Policies are included in schema.sql. Keep this file for reference only.
+-- Re-run schema.sql after structural changes.

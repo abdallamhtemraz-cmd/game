@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#061230">
+<title>بطولة الصناديق والتكتيك ⚽</title>
+<style>
+:root{--gold:#ffc233;--lime:#3ddc72;--red:#ff4a5a;--blue:#4cc9ff;--pink:#ff5fa0;--ink:#f2f6ff;--dim:#9fb2d9;--panel:rgba(6,16,44,.78);--line:rgba(160,190,255,.22);--r:14px;--f:'Trebuchet MS','Tajawal','Segoe UI',sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:#040b22}
+body{margin:0;font-family:'Tajawal','Cairo',sans-serif;color:var(--ink);line-height:1.5;min-height:100vh;display:flex;justify-content:center;overflow-x:hidden;background:radial-gradient(ellipse 70% 40% at 50% 0,rgba(76,201,255,.22),transparent 70%),linear-gradient(180deg,#071634,#0b2154 60%,#0d5a2a)}
+#app{width:100%;max-width:960px;padding:clamp(10px,2.4vw,22px);display:flex;flex-direction:column}
+.screen{display:none;flex-direction:column;flex:1;animation:fi .35s ease-out}.screen.active{display:flex}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.brand{text-align:center;margin-bottom:14px}.brand h1{margin:0;font-family:var(--f);font-size:clamp(26px,6vw,42px);text-shadow:0 3px 0 rgba(0,0,0,.45)}
+.brand p{margin:4px 0 0;color:var(--dim);font-size:14px}.brand p.motm{color:var(--gold);font-size:18px;font-weight:800}.brand p.tour{white-space:pre-line;font-size:13px}
+.landing{margin:auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:24px 8px}
+.landing h1{margin:0;font-family:var(--f);font-size:clamp(40px,12vw,90px);line-height:1.1;text-shadow:0 0 40px rgba(255,194,51,.5)}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;border-radius:12px;border:none;font-family:var(--f);font-size:19px;font-weight:700;cursor:pointer;color:#fff}
+.btn-primary{background:linear-gradient(180deg,#ffd65e,#ffb31f);color:#2a1a00;box-shadow:0 5px 0 #a9720a}.btn-primary:active{transform:translateY(3px);box-shadow:0 2px 0 #a9720a}
+.btn-secondary{background:rgba(255,255,255,.08);border:1px solid var(--line);margin-top:8px}.btn:disabled{opacity:.6}
+.btn.mini{width:auto;display:inline-flex;padding:6px 12px;font-size:13px;margin:0}
+input[type=text],input[type=password],select{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(160,190,255,.28);background:rgba(3,9,28,.75);color:#fff;font-family:inherit;margin:4px 0 10px;font-size:15px;color-scheme:dark}
+label{display:block;font-size:12px;font-weight:700;color:var(--dim)}
+.setup-grid{display:grid;grid-template-columns:1fr;gap:12px}@media(min-width:640px){.setup-grid{grid-template-columns:1fr 1fr}}
+.team-card,.online-card,.auth-card,.rating-card,.pitch-wrapper{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.team-card{border-top:5px solid var(--team,var(--blue))}.team-card h3{margin:0 0 8px;font-family:var(--f);color:var(--team,var(--blue))}
+#team-card-3,#team-card-4{display:none}
+.team-count-picker{margin:12px 0;display:flex;gap:8px}.tc-btn{flex:1;margin:0}.tc-btn.active{background:linear-gradient(180deg,#ffd65e,#ffb31f);color:#2a1a00}
+.guide{margin:14px 0}.guide h3{margin:0 0 6px;color:var(--gold);font-family:var(--f)}.guide p,.guide li{font-size:13px;color:#dbe6ff}
+.tiers{display:flex;flex-wrap:wrap;gap:8px}.tier{flex:1 1 140px;padding:8px 12px;border-radius:12px;font-size:13px;font-weight:700}
+.turn-banner{text-align:center;background:var(--panel);padding:10px;border-radius:var(--r);margin-bottom:12px;border:1px solid var(--line);border-bottom:4px solid var(--gold)}
+.turn-banner h2{margin:0;font-family:var(--f);font-size:24px}.turn-banner p{margin:2px 0 0;color:var(--dim);font-size:14px}
+.box-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}@media(min-width:560px){.box-grid{grid-template-columns:repeat(4,1fr)}}
+.box{min-height:138px;border-radius:14px;padding:22px 6px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:linear-gradient(180deg,#17336f,#0c1d4a);border:2px solid rgba(160,190,255,.3);cursor:pointer;position:relative;text-align:center;transition:.25s}
+.box .num{position:absolute;top:5px;left:9px;font-size:11px;opacity:.55}.box .icon{font-size:30px}.box .name{font-size:14px;font-weight:800;line-height:1.3}
+.box .rating{font-size:13px;font-weight:800;color:var(--gold);background:rgba(0,0,0,.28);padding:1px 10px;border-radius:99px}
+.box .props{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}.box .props span{font-size:10.5px;padding:1px 7px;border-radius:99px;background:rgba(0,0,0,.24)}.box .card-desc{font-size:11px}
+.box.opened{border-color:var(--gold);transform:scale(1.02);box-shadow:0 0 0 3px rgba(255,194,51,.28)}.box.missed{opacity:.55}
+.t-legend{background:linear-gradient(160deg,#ffe9a0,#e0a020 55%,#9a6400)!important;color:#241600}.t-good{background:linear-gradient(160deg,#e4eeff,#9db7e6 55%,#5f7fb8)!important;color:#0d1b3d}.t-bad{background:linear-gradient(160deg,#e6b58a,#b07a4a 55%,#6f4524)!important;color:#26150a}
+.t-legend .rating,.t-good .rating,.t-bad .rating{color:inherit}
+/* ===== Ballon d'Or: أعلى وأندر كارت ===== */
+.t-ballon{
+  background:radial-gradient(circle at 50% 0,rgba(255,255,255,.85),transparent 28%),linear-gradient(145deg,#f8e8ff 0%,#c96cff 28%,#7a20d8 58%,#3b087e 100%) !important;
+  color:#fff !important;border-color:#f3c7ff !important;position:relative;overflow:hidden;
+  box-shadow:0 0 14px 3px rgba(190,72,255,.75),inset 0 0 18px rgba(255,255,255,.16);
+  animation:ballonFloat 1.8s ease-in-out infinite,ballonGlow 1.25s ease-in-out infinite alternate;
+}
+.t-ballon::before{content:'';position:absolute;inset:-80% -30%;background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.72) 48%,transparent 58%);transform:translateX(-80%) rotate(8deg);animation:ballonShine 2.4s linear infinite;pointer-events:none}
+.t-ballon::after{content:"⚽ BALLON D'OR ⚽";position:absolute;top:7px;right:50%;transform:translateX(50%);font-size:9px;font-weight:900;letter-spacing:1.2px;color:#fff;text-shadow:0 1px 5px #3b087e;opacity:.92;pointer-events:none}
+@keyframes ballonFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.018)}}
+@keyframes ballonGlow{from{box-shadow:0 0 12px 2px rgba(190,72,255,.65),0 0 28px rgba(255,210,255,.15),inset 0 0 14px rgba(255,255,255,.12)}to{box-shadow:0 0 24px 7px rgba(206,95,255,.98),0 0 45px rgba(255,180,255,.35),inset 0 0 24px rgba(255,255,255,.25)}}
+@keyframes ballonShine{0%{transform:translateX(-90%) rotate(8deg)}55%,100%{transform:translateX(90%) rotate(8deg)}}
+.t-ballon .rating{color:#fff;text-shadow:0 0 8px #f2c9ff}.t-ballon .props span{background:rgba(45,0,80,.42);border:1px solid rgba(255,255,255,.2)}.t-ballon .name{padding-top:12px}
+
+@keyframes pg{from{box-shadow:0 0 10px 1px rgba(255,80,30,.55)}to{box-shadow:0 0 26px 5px rgba(255,140,30,.95)}}
+.tier.t-premium{animation:none}
+.box.is-card{color:#fff;border-color:var(--gold);background:linear-gradient(160deg,#4a1024,#170812)}
+.pitches-container{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}@media(max-width:460px){.pitches-container{grid-template-columns:1fr}}@media(min-width:700px){.pitches-container.three{grid-template-columns:repeat(3,1fr)}}
+#pitch-wrap-3,#pitch-wrap-4{display:none}
+.pitch-wrapper{display:flex;flex-direction:column;align-items:center;padding:10px}.pitch-title{font-family:var(--f);font-size:18px;margin-bottom:6px;text-align:center}
+.pitch{width:100%;max-width:380px;aspect-ratio:68/100;position:relative;overflow:hidden;background:repeating-linear-gradient(0deg,#1f8f3f 0 10%,#1a7d37 10% 20%);border:2px solid rgba(255,255,255,.75);border-radius:8px}
+.pitch:before{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.6)}
+.pitch:after{content:'';position:absolute;top:50%;left:50%;width:24%;aspect-ratio:1;transform:translate(-50%,-50%);border:2px solid rgba(255,255,255,.6);border-radius:50%}
+.pmark{position:absolute;border:2px solid rgba(255,255,255,.55)}.pbox-top{top:0;left:20%;width:60%;height:15%;border-top:none}.pbox-bottom{bottom:0;left:20%;width:60%;height:15%;border-bottom:none}
+.goalbox-top{top:0;left:36%;width:28%;height:6%;border-top:none}.goalbox-bottom{bottom:0;left:36%;width:28%;height:6%;border-bottom:none}
+.dots-layer{position:absolute;inset:0}
+.player-dot{position:absolute;transform:translate(-50%,50%);display:flex;flex-direction:column;align-items:center;transition:all .5s}
+.player-dot .node{width:24px;height:24px;border-radius:50%;background:var(--dot,var(--gold));color:#10161f;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 7px rgba(0,0,0,.7)}
+.player-dot .p-name{font-size:9px;font-weight:700;background:rgba(2,8,26,.88);color:#fff;padding:1px 5px;border-radius:4px;white-space:nowrap;margin-top:2px}
+.player-dot.red-carded .node{background:var(--red)!important;color:#fff;text-decoration:line-through}
+.player-dot.premium:not(.red-carded) .node{background:radial-gradient(circle at 50% 30%,#ff9a3c,#e0182d 70%)!important;color:#fff;border-color:#ffd9a0;box-shadow:0 0 10px 3px rgba(255,110,30,.9)}
+.player-dot.ballon:not(.red-carded) .node{background:radial-gradient(circle at 35% 25%,#fff,#c65cff 35%,#7017c8 72%,#3a0875)!important;color:#fff;border-color:#f7d7ff;box-shadow:0 0 12px 4px rgba(193,70,255,.95);animation:ballonNode 1.1s ease-in-out infinite alternate}
+@keyframes ballonNode{from{transform:scale(1);box-shadow:0 0 8px 2px rgba(193,70,255,.65)}to{transform:scale(1.12);box-shadow:0 0 16px 5px rgba(220,120,255,.95)}}
+.player-dot.protected:after{content:'🛡️';position:absolute;top:-12px;left:50%;margin-left:7px;font-size:14px}
+.player-dot.pop{animation:pop .55s}@keyframes pop{0%{transform:translate(-50%,50%) scale(0)}55%{transform:translate(-50%,50%) scale(1.4)}100%{transform:translate(-50%,50%) scale(1)}}
+.swap-out{animation:so .45s ease-in forwards}@keyframes so{to{opacity:0;transform:scale(.35) rotate(18deg)}}
+#swap-flash{position:fixed;inset:0;pointer-events:none;z-index:150;opacity:0;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,200,55,.35) 45%,transparent 75%)}#swap-flash.active{animation:sf .65s}@keyframes sf{18%{opacity:1}to{opacity:0}}
+.shaking{animation:sh .5s}@keyframes sh{20%{transform:translate(-4px,3px)}40%{transform:translate(4px,-3px)}60%{transform:translate(-3px,-2px)}80%{transform:translate(3px,2px)}}
+.coach-badge{font-size:12px;font-weight:700;background:rgba(255,255,255,.07);padding:5px 8px;border-radius:8px;margin-top:8px;width:100%;text-align:center;border:1px dashed rgba(255,255,255,.28)}
+.cards-frame{width:100%;margin-top:8px;padding:8px;border-radius:10px;border:1.5px solid rgba(160,190,255,.38);background:rgba(3,9,28,.6)}
+.cf-title{display:flex;justify-content:space-between;margin-bottom:6px;font-family:var(--f);font-size:14px;color:var(--gold)}.cf-list{display:flex;flex-wrap:wrap;gap:5px}
+.cf-chip{display:inline-flex;gap:5px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:800;color:var(--c);border:1px solid var(--c);background:rgba(0,0,0,.38)}.cf-chip small{color:var(--dim);font-size:10px}.cf-chip.used{opacity:.55}.cf-chip.used .cf-name{text-decoration:line-through}.cf-empty{font-size:11.5px;color:var(--dim)}
+.vs-container{display:flex;flex-direction:column;align-items:center;gap:15px;margin:auto;padding:20px 0;width:100%}.vs-stage{display:flex;width:100%;justify-content:center;gap:4vw;position:relative}.vs-stage .pitch-wrapper{flex:0 1 42%;max-width:320px;min-width:130px}
+.vs-badge-wrap{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:20;pointer-events:none}
+.vs-badge{font-family:var(--f);font-size:clamp(40px,9vw,64px);font-weight:700;font-style:italic;color:var(--red);text-shadow:0 0 20px rgba(255,77,77,.9);animation:vsm .7s both}@keyframes vsm{0%{transform:scale(6);opacity:0}65%{transform:scale(1.3)}100%{transform:scale(1)}}
+.clash-left{animation:cl .75s both}.clash-right{animation:cr .75s both}@keyframes cl{from{transform:translateX(-160%);opacity:0}}@keyframes cr{from{transform:translateX(160%);opacity:0}}
+.match-header{text-align:center;background:rgba(2,8,26,.92);padding:14px;border-radius:16px;border:1px solid var(--line);border-top:4px solid var(--lime);margin-bottom:12px}
+.m-teams{display:flex;justify-content:space-between;gap:10px;font-family:var(--f);font-size:20px}.match-score{font-family:var(--f);font-size:clamp(36px,10vw,54px);letter-spacing:2px}
+.match-timer{display:inline-block;background:rgba(255,74,90,.85);padding:1px 16px;border-radius:99px;font-weight:800}.match-label{font-size:13px;font-weight:800;color:var(--gold)}.match-label:empty{display:none}
+.match-log{background:rgba(2,8,26,.72);border:1px solid var(--line);border-radius:var(--r);padding:10px;height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.log-item{padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.08);font-size:13.5px}.log-item.goal{background:rgba(61,220,114,.16);border-right:4px solid var(--lime)}.log-item.save{background:rgba(255,74,90,.15);border-right:4px solid var(--red)}.log-item.pen{background:rgba(255,194,51,.2);border-right:4px solid var(--gold)}
+.match-actions{display:flex;gap:10px;margin-top:10px}.match-actions .btn{margin:0}
+.ratings-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}@media(min-width:560px){.ratings-grid{grid-template-columns:1fr 1fr}}
+.rating-row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px}.rating-row .pos{color:var(--dim);font-size:11px}.rating-row .rv{font-weight:800;white-space:nowrap}
+.rating-row.motm{background:rgba(255,194,51,.16);border-radius:8px;padding-inline:8px}
+.toast{position:fixed;top:15px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1c1300;padding:10px 18px;border-radius:30px;font-weight:800;font-size:14px;z-index:999;display:none;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(2,6,20,.88);display:none;align-items:center;justify-content:center;z-index:100;padding:16px}.modal.active{display:flex}
+.modal-content{background:linear-gradient(180deg,#14296a,#0a1638);padding:22px;border-radius:18px;text-align:center;width:100%;max-width:400px;border:2px solid var(--gold);max-height:88vh;overflow-y:auto}
+.modal-content .emoji{font-size:44px}.modal-content h2{margin:8px 0 4px;font-family:var(--f);font-size:23px}.modal-content p{margin:0 0 12px;color:#d3def7;font-size:14px;white-space:pre-line;line-height:1.7}
+.pick-list{display:flex;flex-direction:column;gap:8px}.pick-item{display:flex;justify-content:space-between;gap:10px;width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid rgba(160,190,255,.3);background:rgba(3,9,28,.75);color:#fff;font-family:inherit;font-size:14px;font-weight:800;cursor:pointer;text-align:start}
+.pick-item small{color:var(--dim);font-weight:500}.pick-item .r{color:var(--gold);white-space:nowrap}.pick-item:disabled{opacity:.45}
+#fx-overlay{position:fixed;inset:0;pointer-events:none;z-index:1000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.fx-ball{position:absolute;font-size:70px}.fx-text{position:absolute;font-family:var(--f);font-size:28px;font-weight:700;background:rgba(2,8,26,.92);padding:8px 24px;border-radius:30px;border:2px solid var(--lime);color:var(--gold);white-space:nowrap}
+.anim-ltr{animation:ltr 1.2s forwards}@keyframes ltr{0%{left:-100px;opacity:0}20%{opacity:1}100%{left:110%;transform:scale(1.6) rotate(720deg)}}
+.anim-rtl{animation:rtl 1.2s forwards}@keyframes rtl{0%{right:-100px;opacity:0}20%{opacity:1}100%{right:110%;transform:scale(1.6) rotate(-720deg)}}
+.anim-save{animation:ps .55s forwards}@keyframes ps{0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}}.save-cross{position:absolute;top:-12px;right:-12px;font-size:55px}
+.auth-screen{min-height:90vh;display:flex;align-items:center;justify-content:center}.auth-card,.online-card{width:100%;max-width:520px;margin:0 auto}
+.auth-card h2,.online-card h2{margin:0 0 6px;font-family:var(--f);text-align:center}.auth-logo{font-size:46px;text-align:center}.muted{color:var(--dim);font-size:13px;text-align:center}
+.auth-error{display:none;background:rgba(255,74,90,.14);border:1px solid rgba(255,74,90,.45);color:#ffd4d8;padding:10px;border-radius:10px;margin-bottom:10px;font-size:13px}
+.online-grid{display:grid;grid-template-columns:1fr;gap:10px}@media(min-width:700px){.online-grid{grid-template-columns:1fr 1fr}}
+.section-mini{font-family:var(--f);font-weight:800;color:var(--gold);margin:12px 0 7px}
+.room-code{font-family:var(--f);font-size:34px;letter-spacing:5px;text-align:center;color:var(--gold);background:rgba(0,0,0,.25);padding:10px;border-radius:12px;margin:10px 0}
+.room-list{display:flex;flex-direction:column;gap:8px;max-height:250px;overflow:auto;margin-top:10px}
+.member-row,.invite-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:1px solid rgba(160,190,255,.18);background:rgba(255,255,255,.05);border-radius:10px}
+.ready-badge{font-size:11px;font-weight:900;padding:3px 8px;border-radius:99px;background:rgba(255,74,90,.15);color:#ff9da7}.ready-badge.on{background:rgba(61,220,114,.15);color:#7dffac}
+.online-hidden{display:none!important}.invite-count{color:var(--gold);font-weight:900}.online-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.online-setup-preview{display:flex;gap:10px;align-items:center;justify-content:center;margin:14px 0;flex-wrap:wrap}.online-player-chip{flex:1;min-width:110px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05);text-align:center}.online-player-chip b{display:block;color:var(--gold)}
+.online-turn-note{margin:10px 0;padding:10px;border-radius:12px;background:rgba(76,201,255,.08);border:1px solid rgba(76,201,255,.2);text-align:center;font-weight:800}
+.pw-row{display:flex;gap:6px;align-items:center}.pw-row button{border:0;background:transparent;color:var(--gold);font-weight:800;cursor:pointer}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ===== Supabase: العميل + الدخول + الدعوات ===== */
+const SUPABASE_URL="https://rubduyolnxkskvinhote.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_w4K_tXqNNzrWAwtZGyLmBg_vwRsFGBs";
+const PLAYER_EMAIL_DOMAIN="@player.local";
+let sb=null,onlineUser=null,onlineProfile=null,currentRoom=null,currentRoomChannel=null,inviteChannel=null,onlineMode=false;
+let onlineSetup={me:null,other:null,ready:{},formations:{},members:[]};
+let onlineGame={phase:'idle',hostId:null,teams:null};
+
+function onlineError(m){const a=document.getElementById('online-error');if(a){a.innerText=m;a.style.display='block';}showToast(m);}
+function authError(m){const a=document.getElementById('auth-error');if(a){a.innerText=m;a.style.display='block';}}
+function ensureSupabaseClient(){
+  if(sb)return sb;
+  if(!window.supabase||typeof window.supabase.createClient!=='function')return null;
+  sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storage:window.localStorage,storageKey:'fifa-games-auth'}});
+  return sb;
+}
+async function loginPlayer(){
+  const a=document.getElementById('auth-error');a.style.display='none';
+  if(!ensureSupabaseClient()){authError('مكتبة Supabase لم يتم تحميلها. تأكد من الإنترنت وأعد تحميل الصفحة.');return;}
+  const u=document.getElementById('login-username').value.trim().toLowerCase(),p=document.getElementById('login-password').value;
+  if(!u||!p){authError('اكتب اسم المستخدم وكلمة المرور.');return;}
+  const btn=document.getElementById('login-btn');btn.disabled=true;
+  try{
+    const {data,error}=await sb.auth.signInWithPassword({email:u+PLAYER_EMAIL_DOMAIN,password:p});
+    if(error){
+      const m=String(error.message||'').toLowerCase();
+      if(m.includes('email not confirmed'))authError('الحساب غير مؤكد. من Supabase → Authentication → Users تأكد إن Confirmed ظاهر.');
+      else if(m.includes('invalid login'))authError('اسم المستخدم أو كلمة المرور غلط.');
+      else if(m.includes('fetch')||m.includes('network'))authError('مش قادر يتصل بـ Supabase. راجع النت.');
+      else authError('خطأ في تسجيل الدخول: '+error.message);
+      return;
+    }
+    if(await loadOnlineProfile(data.user.id))showOnlineLobby();
+  }catch(e){console.error(e);authError('تعذر تسجيل الدخول.');}
+  finally{btn.disabled=false;}
+}
+async function loadOnlineProfile(userId){
+  if(!sb)return false;
+  const {data,error}=await sb.from('players').select('id,user_id,username,points,wins').eq('user_id',userId).maybeSingle();
+  let prof=data;
+  if(!prof){try{prof=JSON.parse(localStorage.getItem('fifa_profile_cache_'+userId)||'null');}catch(_){}}
+  else{try{localStorage.setItem('fifa_profile_cache_'+userId,JSON.stringify(prof));}catch(_){}}
+  if(!prof||!prof.username){console.error(error);authError('الحساب موجود لكن مش موجود في جدول players. شغّل ملف supabase_setup.sql.');return false;}
+  onlineUser={id:userId};onlineProfile=prof;
+  document.getElementById('online-username').innerText=prof.username;
+  document.getElementById('online-points').innerText=prof.points||0;
+  try{await loadInvites();subscribeToInvites();}catch(_){}
+  return true;
+}
+function showScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function showGuestLanding(){onlineMode=false;showScreen('screen-landing');}
+function showOnlineLobby(){if(!onlineProfile){showScreen('screen-auth');return;}showScreen('screen-online');document.getElementById('online-points').innerText=onlineProfile.points||0;loadInvites();}
+function randomRoomCode(){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let o='';for(let i=0;i<6;i++)o+=c[Math.floor(Math.random()*c.length)];return o;}
+async function sendRoomInvite(){
+  if(!currentRoom||!onlineUser)return;
+  const u=document.getElementById('invite-username').value.trim().toLowerCase();if(!u)return;
+  const {data:t}=await sb.from('players').select('user_id,username').eq('username',u).maybeSingle();
+  if(!t){onlineError('اللاعب غير موجود.');return;}
+  if(t.user_id===onlineUser.id){onlineError('مينفعش تدعو نفسك.');return;}
+  const {error}=await sb.from('invitations').insert({room_id:currentRoom.id,from_user_id:onlineUser.id,to_user_id:t.user_id,status:'pending'});
+  if(error)onlineError('تعذر إرسال الدعوة.');else showToast('تم إرسال الدعوة.');
+}
+async function loadInvites(){}            /* بتتعوّض في طبقة الأونلاين */
+function subscribeToInvites(){
+  if(!sb||!onlineUser)return;
+  if(inviteChannel)sb.removeChannel(inviteChannel);
+  inviteChannel=sb.channel('invites:'+onlineUser.id).on('postgres_changes',{event:'*',schema:'public',table:'invitations',filter:'to_user_id=eq.'+onlineUser.id},()=>loadInvites()).subscribe();
+}
+async function answerInvite(id,accept){
+  const {data:inv}=await sb.from('invitations').select('id,room_id').eq('id',id).maybeSingle();
+  if(!inv)return;
+  await sb.from('invitations').update({status:accept?'accepted':'rejected'}).eq('id',id);
+  if(accept){
+    const {data:room}=await sb.from('rooms').select('*').eq('id',inv.room_id).eq('status','waiting').maybeSingle();
+    if(room){await sb.from('room_players').upsert({room_id:room.id,user_id:onlineUser.id,ready:false},{onConflict:'room_id,user_id'});await enterRoom(room);}
+    else showToast('الغرفة لم تعد متاحة.');
+  }
+  loadInvites();
+}
+async function logoutPlayer(){}           /* بتتعوّض في طبقة الأونلاين */
+function toggleLoginPassword(){const i=document.getElementById('login-password'),b=document.getElementById('pw-toggle'),s=i.type==='text';i.type=s?'password':'text';b.innerText=s?'إظهار':'إخفاء';}
+async function claimOnlineMatch(){
+  if(!sb||!onlineUser||!currentRoom)return;
+  const {data,error}=await sb.rpc('claim_match_win',{p_room_id:currentRoom.id});
+  if(!error&&data===true){onlineProfile.points=(onlineProfile.points||0)+3;onlineProfile.wins=(onlineProfile.wins||0)+1;showToast('+3 نقاط 🏆');}
+}
+</script>
+</head>
+<body>
+<div id="app">
+
+<section class="screen active" id="screen-auth"><div class="auth-screen"><div class="auth-card">
+  <div class="auth-logo">⚽</div><h2>تسجيل الدخول</h2><p class="muted">ادخل بحساب اللاعب وابدأ اللعب أونلاين.</p>
+  <div class="auth-error" id="auth-error"></div>
+  <label for="login-username">اسم المستخدم</label><input type="text" id="login-username" autocomplete="username" placeholder="اسم المستخدم" spellcheck="false">
+  <label for="login-password">كلمة المرور</label><div class="pw-row"><input type="password" id="login-password" autocomplete="current-password" placeholder="كلمة المرور"><button type="button" id="pw-toggle" onclick="toggleLoginPassword()">إظهار</button></div>
+  <button class="btn btn-primary" id="login-btn" onclick="loginPlayer()">دخول للحساب →</button>
+  <p class="muted" style="margin-top:14px">حسابات اللاعبين ينشئها الأدمن فقط</p>
+  <button class="btn btn-secondary" onclick="showGuestLanding()">تجربة اللعبة محليًا (أوفلاين)</button>
+</div></div></section>
+
+<section class="screen" id="screen-online">
+  <div class="brand"><h1>🌐 اللعب أونلاين</h1><p>حسابك: <b id="online-username">-</b> · النقاط: <b id="online-points">0</b></p></div>
+  <div class="online-card">
+    <div id="online-error" class="auth-error"></div>
+    <div class="online-grid">
+      <div><div class="section-mini">إنشاء غرفة</div><label>عدد الفرق</label>
+        <select id="online-team-count"><option value="2">2 فرق — 1 ضد 1</option><option value="3">3 فرق — بطولة</option><option value="4">4 فرق — بطولة</option></select>
+        <button class="btn btn-primary" onclick="createOnlineRoom()">إنشاء غرفة</button></div>
+      <div><div class="section-mini">دخول غرفة</div><label>كود الغرفة</label>
+        <input type="text" id="join-room-code" maxlength="6" placeholder="ABC123" style="text-transform:uppercase">
+        <button class="btn btn-secondary" onclick="joinOnlineRoom()">دخول</button></div>
+    </div>
+    <div class="section-mini">الغرفة الحالية</div>
+    <div id="current-room-box" class="online-hidden">
+      <div class="room-code" id="current-room-code">------</div><div class="muted" id="room-status-text">...</div>
+      <div class="room-list" id="room-members"></div>
+      <div class="online-actions"><button class="btn btn-primary" id="ready-btn" onclick="toggleReady()">جاهز</button><button class="btn btn-secondary" style="margin:0" onclick="leaveOnlineRoom()">مغادرة</button></div>
+      <div class="section-mini">دعوة لاعب</div><input type="text" id="invite-username" placeholder="Username">
+      <button class="btn btn-secondary" onclick="sendRoomInvite()">إرسال دعوة</button>
+      <button class="btn btn-primary" id="start-online-game-btn" style="display:none;margin-top:8px" onclick="startOnlineGame()">بدء المباراة</button>
+    </div>
+    <div class="section-mini">دعواتك <span class="invite-count" id="invite-count">0</span></div><div class="room-list" id="invite-list"></div>
+    <button class="btn btn-secondary" onclick="logoutPlayer()">تسجيل الخروج</button>
+    <button class="btn btn-secondary" onclick="showGuestLanding()">العب أوفلاين</button>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div><div id="swap-flash"></div><div id="fx-overlay"></div>
+
+<section class="screen" id="screen-landing"><div class="landing">
+  <div style="font-size:58px">⚽</div><h1>بطولة الصناديق<br>والتكتيك</h1>
+  <p class="muted">افتح الصناديق، اختار لاعبينك، ركّب تشكيلتك وواجه صاحبك.</p>
+  <button class="btn btn-primary" style="max-width:320px;font-size:28px" onclick="showSetup()">العب الآن</button>
+  <button class="btn btn-secondary" style="max-width:320px" onclick="showOnlineLobby()">🌐 اللعب أونلاين</button>
+</div></section>
+
+<section class="screen" id="screen-setup">
+  <div class="brand"><h1>بطولة التكتيك والصناديق ⚽</h1><p>اختار عدد الفرق، اسم كل فريق والتشكيلة، وابدأ المزاد.</p></div>
+  <div class="setup-grid">
+    <div class="team-card" style="--team:var(--blue)"><h3>الفريق الأول</h3><label>اسم الفريق</label><input type="text" id="t1-name" value="real madrid"><label>التشكيلة</label>
+      <select id="t1-fmt"><option>4-3-3</option><option>4-4-2</option><option selected>4-2-3-1</option><option>3-5-2</option></select></div>
+    <div class="team-card" style="--team:var(--gold)"><h3>الفريق الثاني</h3><label>اسم الفريق</label><input type="text" id="t2-name" value="barcelona"><label>التشكيلة</label>
+      <select id="t2-fmt"><option selected>4-3-3</option><option>4-4-2</option><option>4-2-3-1</option><option>3-5-2</option></select></div>
+    <div class="team-card" id="team-card-3" style="--team:var(--lime)"><h3>الفريق الثالث</h3><label>اسم الفريق</label><input type="text" id="t3-name" value="liverpool"><label>التشكيلة</label>
+      <select id="t3-fmt"><option>4-3-3</option><option selected>4-4-2</option><option>4-2-3-1</option><option>3-5-2</option></select></div>
+    <div class="team-card" id="team-card-4" style="--team:var(--pink)"><h3>الفريق الرابع</h3><label>اسم الفريق</label><input type="text" id="t4-name" value="man city"><label>التشكيلة</label>
+      <select id="t4-fmt"><option>4-3-3</option><option>4-4-2</option><option>4-2-3-1</option><option selected>3-5-2</option></select></div>
+  </div>
+  <div class="team-count-picker">
+    <button class="btn btn-secondary tc-btn active" data-count="2" onclick="setTeamCount(2)">فريقين</button>
+    <button class="btn btn-secondary tc-btn" data-count="3" onclick="setTeamCount(3)">3 فرق</button>
+    <button class="btn btn-secondary tc-btn" data-count="4" onclick="setTeamCount(4)">4 فرق</button>
+  </div>
+  <div class="guide"><h3>كروت المفاجآت</h3>
+    <p>في كل اختيار (غير المدرب) فيه احتمال 22% إن صندوق يبقى مخبّي كارت مع اللاعب، وكل فريق ياخد كل كارت مرة واحدة.</p>
+    <ul>
+      <li>🟥 <b>الطرد:</b> يطرد لاعب عشوائي من فريقك (مش الحارس).</li>
+      <li>🔄 <b>التبديل:</b> فوراً: تبدّل تشكيلتك كلها مع فريق تاني وتاخد لاعب الصندوق.</li>
+      <li>💎 <b>الفاجر:</b> تبدّل لاعب بلاعب في نفس المركز تقييمه فوق 90.</li>
+      <li>🎲 <b>نو ريسك نو فان:</b> تبدّل لاعب بلاعب عشوائي في نفس المركز.</li>
+      <li>🃏 <b>الغشاش:</b> لو خسرت الماتش بيتعاد مرة واحدة.</li>
+      <li>🕵️ <b>النصاب:</b> تبدّل لاعب من عندك بلاعب من الفريق التاني في نفس المركز.</li>
+      <li>🛡️ <b>الحماية:</b> تحمي لاعب من النصاب (بتشتغل الأول).</li>
+      <li>🎯 <b>التالتة تبتة:</b> الصناديق كلها بتتغير ومتاخدش لاعب الكارت.</li>
+    </ul>
+    <div class="tiers"><div class="tier t-ballon">بلندور 🏆 الأعلى</div><div class="tier t-premium">برايم 🔥 130+</div><div class="tier t-legend">أسطورة 👑 103-121</div><div class="tier t-good">نجم ⭐ 76-100</div><div class="tier t-bad">عادي &lt; 75</div></div>
+  </div>
+  <button class="btn btn-primary" onclick="initDraft()">ابدأ التشكيلة الآن</button>
+</section>
+
+<section class="screen" id="screen-online-setup">
+  <div class="brand"><h1>⚽ تجهيز الفريق</h1><p>كل لاعب يختار اسم فريقه وتشكيلته، وبعد تأكيد الكل يبدأ المزاد.</p></div>
+  <div class="online-card">
+    <div class="online-setup-preview" id="online-setup-preview"></div>
+    <div class="section-mini">اسم فريقك</div><input id="online-my-team-name" type="text" maxlength="24" placeholder="Abdullah FC">
+    <div class="section-mini">التشكيلة</div>
+    <select id="online-my-format"><option>4-3-3</option><option>4-4-2</option><option selected>4-2-3-1</option><option>3-5-2</option></select>
+    <div class="online-turn-note" id="online-setup-status"></div>
+    <button class="btn btn-primary" id="online-confirm-setup" onclick="confirmOnlineSetup()">✅ تأكيد الفريق والتشكيلة</button>
+    <button class="btn btn-secondary" onclick="leaveOnlineRoom()">مغادرة الغرفة</button>
+  </div>
+</section>
+
+<section class="screen" id="screen-arena">
+  <div class="turn-banner"><h2 id="turn-team-title">دور الفريق</h2><p id="turn-pos-desc"></p></div>
+  <div class="box-grid" id="boxes-container"></div>
+  <div id="deal-actions" style="display:none;margin-bottom:10px"><button class="btn btn-primary" id="btn-deal" onclick="acceptDeal()">🤝 Deal (تأكيد الاختيار)</button></div>
+  <div class="pitches-container" id="pitches-container">
+    <div class="pitch-wrapper"><div class="pitch-title" id="p1-title" style="color:var(--blue)"></div><div class="pitch" id="pitch-1"><div class="pmark pbox-top"></div><div class="pmark pbox-bottom"></div><div class="pmark goalbox-top"></div><div class="pmark goalbox-bottom"></div><div class="dots-layer"></div></div><div class="coach-badge" id="coach-1">👨‍💼 المدرب: لم يحدد</div><div class="cards-frame" id="cards-1"></div></div>
+    <div class="pitch-wrapper"><div class="pitch-title" id="p2-title" style="color:var(--gold)"></div><div class="pitch" id="pitch-2"><div class="pmark pbox-top"></div><div class="pmark pbox-bottom"></div><div class="pmark goalbox-top"></div><div class="pmark goalbox-bottom"></div><div class="dots-layer"></div></div><div class="coach-badge" id="coach-2">👨‍💼 المدرب: لم يحدد</div><div class="cards-frame" id="cards-2"></div></div>
+    <div class="pitch-wrapper" id="pitch-wrap-3"><div class="pitch-title" id="p3-title" style="color:var(--lime)"></div><div class="pitch" id="pitch-3"><div class="pmark pbox-top"></div><div class="pmark pbox-bottom"></div><div class="pmark goalbox-top"></div><div class="pmark goalbox-bottom"></div><div class="dots-layer"></div></div><div class="coach-badge" id="coach-3">👨‍💼 المدرب: لم يحدد</div><div class="cards-frame" id="cards-3"></div></div>
+    <div class="pitch-wrapper" id="pitch-wrap-4"><div class="pitch-title" id="p4-title" style="color:var(--pink)"></div><div class="pitch" id="pitch-4"><div class="pmark pbox-top"></div><div class="pmark pbox-bottom"></div><div class="pmark goalbox-top"></div><div class="pmark goalbox-bottom"></div><div class="dots-layer"></div></div><div class="coach-badge" id="coach-4">👨‍💼 المدرب: لم يحدد</div><div class="cards-frame" id="cards-4"></div></div>
+  </div>
+</section>
+
+<section class="screen" id="screen-vs">
+  <div class="brand"><h1 id="vs-title">مواجهة العمالقة ⚔️</h1><p id="vs-sub"></p></div>
+  <div class="vs-container">
+    <div class="vs-stage">
+      <div class="pitch-wrapper clash-left"><div class="pitch-title" id="vs-t1-title"></div><div class="pitch" id="vs-pitch-1"></div><div class="cards-frame" id="vs-cards-1"></div></div>
+      <div class="vs-badge-wrap"><div class="vs-badge">VS</div></div>
+      <div class="pitch-wrapper clash-right"><div class="pitch-title" id="vs-t2-title"></div><div class="pitch" id="vs-pitch-2"></div><div class="cards-frame" id="vs-cards-2"></div></div>
+    </div>
+    <button class="btn btn-primary" style="font-size:24px" onclick="startMatch()">⚽ ابدأ المباراة الآن</button>
+  </div>
+</section>
+
+<div class="modal" id="event-modal"><div class="modal-content" id="event-modal-content"></div></div>
+<div class="modal" id="pick-modal"><div class="modal-content"><div class="emoji" id="pick-emoji"></div><h2 id="pick-title"></h2><p id="pick-sub"></p><div class="pick-list" id="pick-list"></div></div></div>
+
+<section class="screen" id="screen-match">
+  <div class="match-header"><div class="match-label" id="match-label"></div>
+    <div class="m-teams"><span id="m-team1"></span><span id="m-team2"></span></div>
+    <div class="match-score" id="m-score">0 - 0</div><div class="match-timer">⏱️ <span id="m-timer">0</span>'</div></div>
+  <div class="match-log" id="m-log"></div>
+  <div class="match-actions">
+    <button class="btn btn-secondary" id="btn-skip-match" onclick="skipMatch()">⏩ تخطي المباراة</button>
+    <button class="btn btn-primary" id="btn-show-results" style="display:none" onclick="showResultsScreen()">📊 عرض التقييمات</button>
+  </div>
+</section>
+
+<section class="screen" id="screen-results">
+  <div class="brand"><h1 id="winner-banner">🏆 بطل المباراة</h1><p class="motm" id="motm-banner"></p><p class="tour" id="tour-summary"></p></div>
+  <h3 style="font-family:var(--f);margin:6px 0 0">📊 تقييمات اللاعبين:</h3>
+  <div class="ratings-grid">
+    <div class="rating-card"><h4 id="res-t1-name" style="margin:0 0 6px"></h4><div id="res-t1-list"></div></div>
+    <div class="rating-card"><h4 id="res-t2-name" style="margin:0 0 6px"></h4><div id="res-t2-list"></div></div>
+  </div>
+  <button class="btn btn-primary" style="margin-top:15px" onclick="newGame()">🔄 مباراة جديدة</button>
+</section>
+</div>
+
+<script>
+/* ===================== قاعدة اللاعبين الكاملة ===================== */
+const DB = {
+  ATT: [
+    // --- بلندور Ballon d'Or: كل بلندور = 50 ريت ---
+    {n:"ليونيل ميسي", r:400, t:"ballon"},
+    {n:"كريستيانو رونالدو", r:250, t:"ballon"},
+    {n:"رونالدو نازاريو", r:100, t:"ballon"},
+    {n:"يوهان كرويف", r:150, t:"ballon"},
+    {n:"ماركو فان باستن", r:150, t:"ballon"},
+    {n:"ألفريدو دي ستيفانو", r:100, t:"ballon"},
+    {n:"كيفن كيغان", r:100, t:"ballon"},
+    {n:"كارل هاينتس رومينيغه", r:100, t:"ballon"},
+    {n:"عثمان ديمبيلي", r:50, t:"ballon"},
+    {n:"كريم بنزيما", r:50, t:"ballon"},
+    {n:"رونالدينيو", r:50, t:"ballon"},
+    {n:"أندريه شيفتشينكو", r:50, t:"ballon"},
+    {n:"مايكل أوين", r:50, t:"ballon"},
+    {n:"جورج ويا", r:50, t:"ballon"},
+    {n:"خريستو ستويتشكوف", r:50, t:"ballon"},
+    {n:"روبرتو باجيو", r:50, t:"ballon"},
+    {n:"جان بيير بابان", r:50, t:"ballon"},
+    {n:"باولو روسي", r:50, t:"ballon"},
+    {n:"غيرد مولر", r:50, t:"ballon"},
+    {n:"جورج بيست", r:50, t:"ballon"},
+    {n:"فلوريان ألبرت", r:50, t:"ballon"},
+    {n:"بوبي تشارلتون", r:50, t:"ballon"},
+    {n:"أوزيبيو", r:50, t:"ballon"},
+    {n:"دينيس لو", r:50, t:"ballon"},
+    {n:"عمر سيفوري", r:50, t:"ballon"},
+    {n:"لويس سواريز ميرامونتيس", r:50, t:"ballon"},
+    {n:"ريمون كوبا", r:50, t:"ballon"},
+    {n:"ستانلي ماثيوز", r:50, t:"ballon"},
+    {n:"أوليغ بلوخين", r:50, t:"ballon"},
+    {n:"إيغور بيلانوف", r:50, t:"ballon"},
+
+    // --- Premium Prime Attackers - 20 players ---
+{n:"غابرييل باتيستوتا 💥 ", r:151, t:"premium"},
+{n:"رونالدو نازاريو البرايم ", r:150, t:"premium"},
+{n:"ليونيل ميسي البرايم ", r:150, t:"premium"},
+{n:"كريستيانو رونالدو البرايم ", r:150, t:"premium"},
+{n:"رونالدينيو البرايم ", r:148, t:"premium"},
+{n:"بيليه البرايم ", r:148, t:"premium"},
+{n:"دييغو مارادونا البرايم ", r:147, t:"premium"},
+{n:"يوهان كرويف البرايم ", r:145, t:"premium"},
+{n:"أوزيبيو البرايم ", r:144, t:"premium"},
+{n:"روماريو البرايم ", r:143, t:"premium"},
+{n:"رونالدو البرايم ", r:142, t:"premium"},
+{n:"تييري هنري البرايم ", r:141, t:"premium"},
+{n:"ماركو فان باستن البرايم ", r:140, t:"premium"},
+{n:"جورج وياه البرايم ", r:139, t:"premium"},
+{n:"روبرتو باجو البرايم ", r:138, t:"premium"},
+{n:"ريفالدو البرايم ", r:137, t:"premium"},
+{n:"أليساندرو دل بييرو البرايم ", r:136, t:"premium"},
+{n:"أندري شيفتشينكو البرايم ", r:135, t:"premium"},
+{n:"صامويل إيتو البرايم ", r:134, t:"premium"},
+{n:"كاكا البرايم ", r:132, t:"premium"},
+{n:"لويس سواريز البرايم ", r:130, t:"premium"},
+
+// --- أساطير معتزلون (Legends) - 30 لاعبا ---
+  {n:"بيليه", r:120, t:"legend"}, {n:"دييغو مارادونا", r:120, t:"legend"}, {n:"غابرييل باتيستوتا", r:120, t:"legend"},
+  {n:"ألفريدو دي ستيفانو", r:117, t:"legend"}, {n:"رونالدو نازاريو", r:118, t:"legend"},
+  {n:"زين الدين زيدان", r:117, t:"legend"}, {n:"يوهان كرويف", r:118, t:"legend"},
+  {n:"أوزيبيو", r:115, t:"legend"}, {n:"فرانتس بيكنباور", r:116, t:"legend"},
+  {n:"باولو مالديني", r:115, t:"legend"}, {n:"رونالدينيو", r:116, t:"legend"},
+  {n:"ميشيل بلاتيني", r:114, t:"legend"}, {n:"فيرينتس بوشكاش", r:115, t:"legend"},
+  {n:"روبرتو باجو", r:113, t:"legend"}, {n:"تييري هنري", r:114, t:"legend"},
+  {n:"ماركو فان باستن", r:114, t:"legend"}, {n:"زيكو", r:113, t:"legend"},
+  {n:"غيرد مولر", r:113, t:"legend"}, {n:"جوزيبي مياتزا", r:112, t:"legend"},
+  {n:"روماريو", r:113, t:"legend"}, {n:"لويس فيغو", r:111, t:"legend"},
+  {n:"كاكا", r:112, t:"legend"}, {n:"بوبي تشارلتون", r:112, t:"legend"},
+  {n:"فرانكو باريزي", r:111, t:"legend"}, {n:"فابيو كانافارو", r:110, t:"legend"},
+  {n:"باتريك فييرا", r:111, t:"legend"}, {n:"ألان شيرار", r:108, t:"legend"},
+  {n:"أليساندرو دل بييرو", r:109, t:"legend"}, {n:"راؤول غونزاليس", r:109, t:"legend"},
+  {n:"ريفالدو", r:111, t:"legend"}, {n:"أندري شيفتشينكو", r:108, t:"legend"},{n:"ليونيل ميسي", r:119, t:"legend"}, {n:"كريستيانو رونالدو", r:121, t:"legend"},
+
+    // --- نجوم (Good) - 100 لاعب ---
+    {n:"محمد صلاح", r:95, t:"good"},
+    {n:"كيليان مبابي", r:96, t:"good"}, {n:"إيرلينج هالاند", r:95, t:"good"}, {n:"كريم بنزيما", r:93, t:"good"},
+    {n:"فينيسيوس جونيور", r:94, t:"good"}, {n:"نيمار جونيور", r:92, t:"good"}, {n:"روبرت ليفاندوفسكي", r:93, t:"good"},
+    {n:"ساديو ماني", r:90, t:"good"}, {n:"هاري كين", r:93, t:"good"}, {n:"أنطوان جريزمان", r:91, t:"good"},
+    {n:"لاوتارو مارتينيز", r:89, t:"good"}, {n:"بوكايو ساكا", r:90, t:"good"}, {n:"رودريجو", r:88, t:"good"},
+    {n:"فيكتور أوسيمين", r:91, t:"good"}, {n:"هيون مين سون", r:90, t:"good"}, {n:"باولو ديبالا", r:88, t:"good"},
+    {n:"أنخيل دي ماريا", r:89, t:"good"}, {n:"عثمان ديمبيلي", r:91, t:"good"}, {n:"برناردو سيلفا", r:91, t:"good"},
+    {n:"فيل فودين", r:91, t:"good"}, {n:"رافائيل لياو", r:89, t:"good"}, {n:"جياكومو راسبادوري", r:82, t:"good"},
+    {n:"أوليفييه جيرو", r:85, t:"good"}, {n:"دوشان فلاهوفيتش", r:87, t:"good"}, {n:"كريستوفر نكونكو", r:88, t:"good"},
+    {n:"ماركوس راشفورد", r:86, t:"good"}, {n:"رياض محرز", r:89, t:"good"}, {n:"روبرتو فيرمينو", r:85, t:"good"},
+    {n:"تامي أبراهام", r:83, t:"good"}, {n:"ألكسندر لاكازيت", r:84, t:"good"}, {n:"جبريل جيسوس", r:86, t:"good"},
+    {n:"رحيم ستيرلينج", r:85, t:"good"}, {n:"تيمو فيرنر", r:82, t:"good"}, {n:"موسى ديابي", r:84, t:"good"},
+    {n:"داروين نونيز", r:85, t:"good"}, {n:"كودي خاكبو", r:84, t:"good"}, {n:"لويس دياز", r:87, t:"good"},
+    {n:"ديوغو جوتا", r:86, t:"good"}, {n:"ألفارو موراتا", r:84, t:"good"}, {n:"ماورو إيكاردي", r:83, t:"good"},
+    {n:"جيرارد مورينو", r:85, t:"good"}, {n:"ياجو أسباس", r:84, t:"good"}, {n:"سيرجي غنابري", r:86, t:"good"},
+    {n:"ليروي ساني", r:87, t:"good"}, {n:"كينغسلي كومان", r:86, t:"good"}, {n:"توماس مولر", r:87, t:"good"},
+    {n:"ماريو جوتزه", r:81, t:"good"}, {n:"إيفان توني", r:85, t:"good"}, {n:"أول واتكينز", r:86, t:"good"},
+    {n:"ألكسندر إسحاق", r:86, t:"good"}, {n:"نيكلاس فولكروج", r:83, t:"good"}, {n:"تشارلز دي كيتيلاري", r:81, t:"good"},
+    {n:"لويس مورييل", r:80, t:"good"}, {n:"دوفان زاباتا", r:81, t:"good"}, {n:"تشيرو إيموبيلي", r:86, t:"good"},
+    {n:"روميلو لوكاكو", r:85, t:"good"}, {n:"أندريا بيلوتي", r:80, t:"good"}, {n:"ماتيو بوليتانو", r:82, t:"good"},
+    {n:"دومينيك كالبرت ليوين", r:81, t:"good"}, {n:"كالوم ويلسون", r:82, t:"good"}, {n:"داني ويلبيك", r:78, t:"good"},
+    {n:"ميشيل أنطونيو", r:79, t:"good"}, {n:"جانلوكا سكاماكا", r:81, t:"good"}, {n:"أندريا بينامونتي", r:78, t:"good"},
+    {n:"سيرهو جيراسي", r:84, t:"good"}, {n:"دينيز أونداف", r:82, t:"good"}, {n:"فيكتور بونيفاس", r:84, t:"good"},
+    {n:"ناثان تيللا", r:79, t:"good"}, {n:"أمين عدلي", r:80, t:"good"}, {n:"جونزالو راموس", r:83, t:"good"},
+    {n:"راندال كولو مواني", r:84, t:"good"}, {n:"برادلي باركولا", r:82, t:"good"}, {n:"عثمان دياماندي", r:79, t:"good"},
+    {n:"ماركو أسينسيو", r:83, t:"good"}, {n:"إبراهيم دياز", r:84, t:"good"}, {n:"رودريغو دي بول", r:83, t:"good"},
+    {n:"أنخل كوريا", r:82, t:"good"}, {n:"ممفيس ديباي", r:82, t:"good"}, {n:"يانيك كاراسكو", r:81, t:"good"},
+    {n:"هيرفين لوزانو", r:80, t:"good"}, {n:"راؤول خيمينيز", r:79, t:"good"}, {n:"سردار أزمون", r:78, t:"good"},
+    {n:"مهدي طارمي", r:82, t:"good"}, {n:"إيلي واهي", r:79, t:"good"}, {n:"فلوريان توفان", r:77, t:"good"},
+    {n:"ديميتري باييت", r:80, t:"good"}, {n:"بافيتيمبي غوميز", r:76, t:"good"}, {n:"لورنزو إنسيني", r:81, t:"good"},
+    {n:"فيديريكو كييزا", r:86, t:"good"}, {n:"دومينيك سوبوسلاي", r:85, t:"good"}, {n:"ميكيل أويارزابال", r:84, t:"good"},
+    {n:"جيريمي دوكو", r:83, t:"good"}, {n:"سافييو", r:82, t:"good"}, {n:"كول بالمر", r:86, t:"good"},
+    {n:"فلوريان فيرتز", r:89, t:"good"}, {n:"عمر مرموش", r:85, t:"good"}, {n:"أرتيم دوفبيك", r:85, t:"good"},
+    {n:"فيكتور غيوكيريس", r:88, t:"good"}, {n:"بيدرو نيتو", r:84, t:"good"}, {n:"جواو فيليكس", r:84, t:"good"},
+
+    // --- عاديين/ضعاف (Bad) - 100 لاعب ---
+  ],
+MID: [
+    // --- بلندور Ballon d'Or: كل بلندور = 50 ريت ---
+    {n:"ميشيل بلاتيني", r:150, t:"ballon"},
+    {n:"رودري", r:50, t:"ballon"},
+    {n:"لوكا مودريتش", r:50, t:"ballon"},
+    {n:"كاكا", r:50, t:"ballon"},
+    {n:"بافل نيدفيد", r:50, t:"ballon"},
+    {n:"لوثار ماتيوس", r:50, t:"ballon"},
+    {n:"رود خوليت", r:50, t:"ballon"},
+    {n:"جاني ريفيرا", r:50, t:"ballon"},
+    {n:"لويس فيغو", r:50, t:"ballon"},
+    {n:"ريفالدو", r:50, t:"ballon"},
+    {n:"زين الدين زيدان", r:50, t:"ballon"},
+    {n:"جوزيف ماسوبوست", r:50, t:"ballon"},
+    {n:"ألان سيمونسن", r:50, t:"ballon"},
+
+  // --- Premium Midfielders - 20 players ---
+{n:"زين الدين زيدان البرايم", r:150, t:"premium"},
+{n:"تشافي البرايم", r:148, t:"premium"},
+{n:"أندريس إنييستا البرايم", r:147, t:"premium"},
+{n:"لوكا مودريتش البرايم", r:145, t:"premium"},
+{n:"أندريا بيرلو البرايم", r:144, t:"premium"},
+{n:"كيفن دي بروين البرايم", r:143, t:"premium"},
+{n:"فرانك لامبارد البرايم", r:142, t:"premium"},
+{n:"ستيفن جيرارد البرايم", r:141, t:"premium"},
+{n:"بول سكولز البرايم", r:139, t:"premium"},
+{n:"كلارنس سيدورف البرايم", r:138, t:"premium"},
+{n:"ميشيل بلاتيني البرايم", r:137, t:"premium"},
+{n:"فرانشيسكو توتي البرايم", r:136, t:"premium"},
+{n:"توني كروس البرايم", r:135, t:"premium"},
+{n:"يايا توريه البرايم", r:134, t:"premium"},
+{n:"ديفيد سيلفا البرايم", r:133, t:"premium"},
+{n:"سيسك فابريغاس البرايم", r:132, t:"premium"},
+{n:"كاكا البرايم", r:131, t:"premium"},
+{n:"ريفالدو البرايم", r:130, t:"premium"},
+{n:"رود خوليت البرايم", r:140, t:"premium"},
+{n:"لوثار ماتيوس البرايم", r:139, t:"premium"},
+
+// --- أساطير معتزلون (Legends) - 30 لاعبا ---
+  {n:"تشافي هيرنانديز", r:119, t:"legend"}, {n:"أندريس إنييستا", r:119, t:"legend"},
+  {n:"زين الدين زيدان", r:118, t:"legend"}, {n:"أندريا بيرلو", r:117, t:"legend"},
+  {n:"رونالدينيو", r:120, t:"legend"}, {n:"كاكا", r:117, t:"legend"},
+  {n:"ستيفان جيرارد", r:116, t:"legend"}, {n:"فرانك لامبارد", r:116, t:"legend"},
+  {n:"بول سكولز", r:115, t:"legend"}, {n:"خوان رومان ريكيلمي", r:115, t:"legend"},
+  {n:"بافل نيدفيد", r:115, t:"legend"}, {n:"دافيد سيلفا", r:114, t:"legend"},
+  {n:"باستيان شفاينشتايجر", r:114, t:"legend"}, {n:"يايا توريه", r:114, t:"legend"},
+  {n:"باتريك فييرا", r:114, t:"legend"}, {n:"لوثار ماتيوس", r:116, t:"legend"},
+  {n:"كلارينس سيدورف", r:113, t:"legend"}, {n:"سيسك فابريغاس", r:113, t:"legend"},
+  {n:"مسعود أوزيل", r:113, t:"legend"}, {n:"كلود ماكيليلي", r:112, t:"legend"},
+  {n:"روي كين", r:112, t:"legend"}, {n:"إدغار ديفيدز", r:112, t:"legend"},
+  {n:"بوبي تشارلتون", r:116, t:"legend"}, {n:"سانتي كازورلا", r:111, t:"legend"},
+  {n:"خوان ماتا", r:111, t:"legend"}, {n:"أرتورو فيدال", r:112, t:"legend"},
+  {n:"كلاوديو ماركيزيو", r:110, t:"legend"}, {n:"محمد أبو تريكة", r:110, t:"legend"},
+  {n:"سعيد العويران", r:110, t:"legend"}, {n:"نواف التمياط", r:108, t:"legend"}, {n:"زين الدين زيدان", r:115, t:"legend"},
+
+    // --- نجوم (Good) - 100 لاعب ---
+    {n:"كيفين دي بروين", r:96, t:"good"}, {n:"لوكا مودريتش", r:94, t:"good"}, {n:"توني كروس", r:93, t:"good"},
+    {n:"جود بيلينجهام", r:94, t:"good"}, {n:"رودري", r:94, t:"good"}, {n:"بيدري", r:91, t:"good"},
+    {n:"فالفيردي", r:91, t:"good"}, {n:"برونو فيرنانديز", r:92, t:"good"}, {n:"إلكاي جوندوجان", r:89, t:"good"},
+    {n:"نجولو كانتي", r:89, t:"good"}, {n:"جمال موسيالا", r:92, t:"good"}, {n:"نيكولو باريللا", r:90, t:"good"},
+    {n:"ديكلان رايس", r:91, t:"good"}, {n:"مارتن أوديجارد", r:91, t:"good"}, {n:"ألكسيس ماك أليستر", r:89, t:"good"},
+    {n:"دومينيك سوبوسلاي", r:88, t:"good"}, {n:"جوشوا كيميش", r:90, t:"good"}, {n:"ليون غوريتسكا", r:87, t:"good"},
+    {n:"فرانكي دي يونغ", r:90, t:"good"}, {n:"جافي", r:88, t:"good"}, {n:"أوريلين تشواميني", r:88, t:"good"},
+    {n:"إدوارد كامافينجا", r:89, t:"good"}, {n:"برونو جيمارايش", r:88, t:"good"}, {n:"ساندرو تونالي", r:87, t:"good"},
+    {n:"كريستيان إريكسن", r:85, t:"good"}, {n:"كاسيميرو", r:89, t:"good"}, {n:"ماسون ماونت", r:84, t:"good"},
+    {n:"جيمس ماديسون", r:86, t:"good"}, {n:"لوكاس باكيتا", r:87, t:"good"}, {n:"جواو بالينيا", r:87, t:"good"},
+    {n:"كونراد لايمير", r:84, t:"good"}, {n:"مارسيل سابيتسر", r:84, t:"good"}, {n:"هاكان تشالهان أوغلو", r:89, t:"good"},
+    {n:"هنريك مخيتاريان", r:83, t:"good"}, {n:"بيوتر زيلينسكي", r:84, t:"good"}, {n:"سيرجي ميلينكوفيتش سافيتش", r:87, t:"good"},
+    {n:"روبن نيفيز", r:85, t:"good"}, {n:"فابيان رويز", r:85, t:"good"}, {n:"ماركو فيراتي", r:88, t:"good"},
+    {n:"لورينزو بيليغريني", r:85, t:"good"}, {n:"برايان كريستانته", r:82, t:"good"}, {n:"ماتيو كوفاتشيتش", r:86, t:"good"},
+    {n:"جورجينيو", r:86, t:"good"}, {n:"غران تشاكا", r:87, t:"good"}, {n:"توني كروس", r:93, t:"good"},
+    {n:"توماس بارتي", r:85, t:"good"}, {n:"يوري تيليمانس", r:84, t:"good"}, {n:"جيمس وارد بروس", r:83, t:"good"},
+    {n:"جون مكجين", r:82, t:"good"}, {n:"دوجلاس لويز", r:86, t:"good"}, {n:"اميل هويبرج", r:83, t:"good"},
+    {n:"رودريغو بينتانكور", r:84, t:"good"}, {n:"ديان كولوسيفسكي", r:85, t:"good"}, {n:"بيدرو جونسالفيس", r:84, t:"good"},
+    {n:"أوتافيو", r:83, t:"good"}, {n:"غونزالو غيديش", r:81, t:"good"}, {n:"رافاييل غيريرو", r:85, t:"good"},
+    {n:"جوليان براندت", r:86, t:"good"}, {n:"إيمري جان", r:83, t:"good"}, {n:"باستيان شفاينشتايجر", r:91, t:"good"},
+    {n:"تشافي هيرنانديز", r:97, t:"good"}, {n:"أندريس إنييستا", r:97, t:"good"},
+    {n:"أندريا بيرلو", r:95, t:"good"}, {n:"بول سكولز", r:93, t:"good"}, {n:"ستيفن جيرارد", r:94, t:"good"},
+    {n:"فرانك لامبارد", r:94, t:"good"}, {n:"كاكا", r:96, t:"good"}, {n:"رونالدينيو", r:98, t:"good"},
+    {n:"كلارينس سيدورف", r:91, t:"good"}, {n:"يايا توريه", r:92, t:"good"}, {n:"باتريك فييرا", r:93, t:"good"},
+    {n:"روي كين", r:91, t:"good"}, {n:"كلود ماكيليلي", r:91, t:"good"}, {n:"إدغار ديفيدز", r:90, t:"good"},
+    {n:"غاييزمنديتا", r:88, t:"good"}, {n:"خوان رومان ريكيلمي", r:92, t:"good"}, {n:"بافل نيدفيد", r:93, t:"good"},
+    {n:"دي فيكيو", r:82, t:"good"}, {n:"سيسك فابريغاس", r:90, t:"good"}, {n:"مسعود أوزيل", r:91, t:"good"},
+    {n:"دافيد سيلفا", r:92, t:"good"}, {n:"خوان ماتا", r:87, t:"good"}, {n:"ساندي كازورلا", r:88, t:"good"},
+    {n:"شواستيان رودي", r:78, t:"good"}, {n:"كيفن بواتينغ", r:82, t:"good"}, {n:"أرتورو فيدال", r:89, t:"good"},
+    {n:"كلاوديو ماركيزيو", r:86, t:"good"}, {n:"آرون رامزي", r:83, t:"good"}, {n:"جاك ويلشير", r:84, t:"good"},
+    {n:"بوبي تشارلتون", r:95, t:"good"}, {n:"بوبي روبسون", r:85, t:"good"}, {n:"زين الدين زيدان", r:96, t:"good"},
+    {n:"صبري لاموشي", r:80, t:"good"}, {n:"أحمد حسن", r:86, t:"good"}, {n:"محمد أبو تريكة", r:89, t:"good"},
+    {n:"حازم إمام", r:85, t:"good"}, {n:"التفاشي", r:80, t:"good"}, {n:"نواف التمياط", r:84, t:"good"},
+    {n:"سعيد العويران", r:87, t:"good"}, {n:"يونس محمود", r:85, t:"good"}, {n:"نشأت أكرم", r:83, t:"good"},
+
+    // --- عاديين/ضعاف (Bad) - 100 لاعب ---
+  ],
+DEF: [
+    // --- بلندور Ballon d'Or: كل بلندور = 50 ريت ---
+    {n:"فرانتس بكنباور", r:100, t:"ballon"},
+    {n:"فابيو كانافارو", r:50, t:"ballon"},
+    {n:"ماتياس زامر", r:50, t:"ballon"},
+
+  // --- Premium Defenders - 30 players ---
+{n:"فرانز بيكنباور البرايم", r:150, t:"premium"},
+{n:"باولو مالديني البرايم", r:149, t:"premium"},
+{n:"سيرجيو راموس البرايم", r:148, t:"premium"},
+{n:"أليساندرو نيستا البرايم", r:147, t:"premium"},
+{n:"فابيو كانافارو البرايم", r:146, t:"premium"},
+{n:"فرانكو باريزي البرايم", r:145, t:"premium"},
+{n:"روبرتو كارلوس البرايم", r:145, t:"premium"},
+{n:"كافو البرايم", r:144, t:"premium"},
+{n:"مارسيلو البرايم", r:143, t:"premium"},
+{n:"كارليس بويول البرايم", r:142, t:"premium"},
+{n:"فيرجيل فان دايك البرايم", r:142, t:"premium"},
+{n:"جون تيري البرايم", r:141, t:"premium"},
+{n:"ريو فرديناند البرايم", r:140, t:"premium"},
+{n:"نيمانيا فيديتش البرايم", r:139, t:"premium"},
+{n:"فيليب لام البرايم", r:138, t:"premium"},
+{n:"داني ألفيس البرايم", r:137, t:"premium"},
+{n:"خافيير زانيتي البرايم", r:136, t:"premium"},
+{n:"أشلي كول البرايم", r:135, t:"premium"},
+{n:"جورجيو كيليني البرايم", r:134, t:"premium"},
+{n:"ليوناردو بونوتشي البرايم", r:133, t:"premium"},
+{n:"تياغو سيلفا البرايم", r:132, t:"premium"},
+{n:"بيبي البرايم", r:131, t:"premium"},
+{n:"ماركينيوس البرايم", r:130, t:"premium"},
+{n:"رافاييل فاران البرايم", r:130, t:"premium"},
+{n:"ديفيد ألابا البرايم", r:130, t:"premium"},
+{n:"فيرناندو هييرو البرايم", r:140, t:"premium"},
+{n:"لوسيو البرايم", r:138, t:"premium"},
+{n:"جوزيه ماريا خيمينيز البرايم", r:132, t:"premium"},
+{n:"غاري نيفيل البرايم", r:130, t:"premium"},
+{n:"إيفان كوردوبا البرايم", r:134, t:"premium"},
+
+// --- دفاع معتزلون (Legends DEF) - 100 لاعب ---
+  {n:"باولو مالديني", r:120, t:"legend"}, {n:"فرانكو باريزي", r:118, t:"legend"},
+  {n:"فرانتس بيكنباور", r:120, t:"legend"}, {n:"فابيو كانافارو", r:117, t:"legend"},
+  {n:"كارليس بويول", r:116, t:"legend"}, {n:"سيرجيو راموس", r:118, t:"legend"},
+  {n:"أليساندرو نستا", r:117, t:"legend"}, {n:"خافيير زانيتي", r:116, t:"legend"},
+  {n:"روبرتو كارلوس", r:117, t:"legend"}, {n:"كافو", r:117, t:"legend"},
+  {n:"غاري نيفيل", r:110, t:"legend"}, {n:"ريو فيرديناند", r:114, t:"legend"},
+  {n:"جون تيري", r:115, t:"legend"}, {n:"نمانيا فيديتش", r:113, t:"legend"},
+  {n:"سول كامبل", r:110, t:"legend"}, {n:"أشلي كول", r:114, t:"legend"},
+  {n:"فليب لام", r:116, t:"legend"}, {n:"لوران بلان", r:112, t:"legend"},
+  {n:"مارسيل ديسائي", r:113, t:"legend"}, {n:"ليليان تورام", r:115, t:"legend"},
+  {n:"بيسنتي ليزارازو", r:111, t:"legend"}, {n:"رونالد كومان", r:114, t:"legend"},
+  {n:"جيرارد بيكيه", r:114, t:"legend"}, {n:"فيكتور فالديز", r:108, t:"legend"},
+  {n:"أندرياس بريمه", r:111, t:"legend"}, {n:"غايتانو شيريا", r:117, t:"legend"},
+  {n:"كلاوديو جنتيلي", r:110, t:"legend"}, {n:"جوزيبي بيرغومي", r:112, t:"legend"},
+  {n:"فرانك دي بور", r:111, t:"legend"}, {n:"ياب ستام", r:114, t:"legend"},
+  {n:"داني بليند", r:108, t:"legend"}, {n:"كريستيان تشيفو", r:109, t:"legend"},
+  {n:"والتر سامويل", r:112, t:"legend"}, {n:"خافيير ماسكيرانو", r:113, t:"legend"},
+  {n:"روبرتو أيالا", r:111, t:"legend"}, {n:"دانييل باساريلا", r:115, t:"legend"},
+  {n:"لوسيو", r:113, t:"legend"}, {n:"تياغو سيلفا", r:115, t:"legend"},
+  {n:"مارسيلو", r:114, t:"legend"}, {n:"داني ألفيس", r:115, t:"legend"},
+  {n:"مايكون", r:111, t:"legend"}, {n:"أدريانو كوريا", r:108, t:"legend"},
+  {n:"أليساندرو فلورينزي", r:107, t:"legend"}, {n:"فابيو غروسو", r:109, t:"legend"},
+  {n:"ماركو ماتيراتزي", r:109, t:"legend"}, {n:"كريستيان بانوتشي", r:108, t:"legend"},
+  {n:"فينسينت كومباني", r:113, t:"legend"}, {n:"جانلوكا زامبروتا", r:112, t:"legend"},
+  {n:"لوري بلان", r:110, t:"legend"}, {n:"ويلي سانيول", r:109, t:"legend"},
+  {n:"سيباستيان دايسلر", r:107, t:"legend"}, {n:"بيرند شوستر", r:111, t:"legend"},
+  {n:"بول برايتنر", r:112, t:"legend"}, {n:"أولي هوينس", r:106, t:"legend"},
+  {n:"كارل هاينز فورتسر", r:109, t:"legend"}, {n:"غوينتر نتسر", r:111, t:"legend"},
+  {n:"أندرياس مولر", r:110, t:"legend"}, {n:"يورغن كوهلر", r:112, t:"legend"},
+  {n:"ماتياس زامر", r:113, t:"legend"}, {n:"ستيفان رويتر", r:108, t:"legend"},
+  {n:"توماس بيرثولد", r:107, t:"legend"}, {n:"غيدو بوخفالد", r:108, t:"legend"},
+  {n:"بيل غيتس", r:105, t:"legend"}, {n:"بوبي مور", r:117, t:"legend"},
+  {n:"جاك تشارلتون", r:111, t:"legend"}, {n:"نوبي ستيلز", r:108, t:"legend"},
+  {n:"راي ويلسون", r:109, t:"legend"}, {n:"جورج كوهين", r:108, t:"legend"},
+  {n:"فيل نيفيل", r:106, t:"legend"}, {n:"جيمي كاراغر", r:110, t:"legend"},
+  {n:"غاري كاهيل", r:108, t:"legend"}, {n:"جون ستونز", r:109, t:"legend"},
+  {n:"كريس سمولينغ", r:106, t:"legend"}, {n:"فيل جاغيلكا", r:105, t:"legend"},
+  {n:"ليتون باينز", r:107, t:"legend"}, {n:"غاري ماليستر", r:105, t:"legend"},
+  {n:"ستيف بروس", r:109, t:"legend"}, {n:"بايلستر", r:108, t:"legend"},
+  {n:"مايكل كوري", r:105, t:"legend"}, {n:"فيل جونز", r:104, t:"legend"},
+  {n:"أنطونيو كابريني", r:112, t:"legend"}, {n:"تاركسيزيو بورنيتش", r:110, t:"legend"},
+  {n:"كلاوديو جناتيلي", r:108, t:"legend"}, {n:"ماركو نابي", r:105, t:"legend"},
+  {n:"جوزيف بانكريزي", r:106, t:"legend"}, {n:"جورجيو كيلليني", r:114, t:"legend"},
+  {n:"ليوناردو بونوتشي", r:113, t:"legend"}, {n:"أندري بارزالي", r:111, t:"legend"},
+  {n:"ستيفان ليشتشتاينر", r:109, t:"legend"}, {n:"ماتيا دي شيليو", r:105, t:"legend"},
+  {n:"كريستيان مولينارو", r:104, t:"legend"}, {n:"سيموني غروسو", r:103, t:"legend"},
+  {n:"روبرتو موسى", r:105, t:"legend"}, {n:"فرانشيسكو كوكو", r:106, t:"legend"},
+  {n:"ماسيمو أودو", r:107, t:"legend"}, {n:"أيمن عبد العزيز", r:103, t:"legend"},
+  {n:"هاني رمزي", r:108, t:"legend"}, {n:"إبراهيم سعيد", r:106, t:"legend"},
+  {n:"وائل جمعه", r:110, t:"legend"}, {n:"أحمد فتحي", r:109, t:"legend"},
+
+    // --- نجوم (Good) - 200 لاعب ---
+    {n:"فيرجيل فان دايك", r:95, t:"good"}, {n:"سيرجيو راموس", r:92, t:"good"}, {n:"روبن دياز", r:93, t:"good"},
+    {n:"أنطونيو روديجر", r:91, t:"good"}, {n:"أشرف حكيمي", r:90, t:"good"}, {n:"ترينت أرنولد", r:89, t:"good"},
+    {n:"داني كارفاخال", r:90, t:"good"}, {n:"ماركينيوس", r:90, t:"good"}, {n:"ديفيد ألابا", r:88, t:"good"},
+    {n:"تيو هيرنانديز", r:91, t:"good"}, {n:"جول كوندي", r:89, t:"good"}, {n:"رونالد أراوخو", r:90, t:"good"},
+    {n:"ويليام ساليبا", r:91, t:"good"}, {n:"جابرييل ماجالهايس", r:89, t:"good"}, {n:"كايل ووكر", r:89, t:"good"},
+    {n:"جون ستونز", r:90, t:"good"}, {n:"جوسكو جفارديول", r:90, t:"good"}, {n:"ناثان آكي", r:87, t:"good"},
+    {n:"أندرو روبيرتسون", r:89, t:"good"}, {n:"إبراهيما كوناتي", r:88, t:"good"}, {n:"بين وايت", r:87, t:"good"},
+    {n:"أولكسندر زينتشينكو", r:85, t:"good"}, {n:"كريستيان روميرو", r:88, t:"good"}, {n:"ميكي فان دي فين", r:87, t:"good"},
+    {n:"بيدرو بورو", r:86, t:"good"}, {n:"ديستني أودوجي", r:85, t:"good"}, {n:"يسبر باسي", r:83, t:"good"},
+    {n:"فيكتور ليندلوف", r:81, t:"good"}, {n:"ليساندرو مارتينيز", r:88, t:"good"}, {n:"رافائيل فاران", r:89, t:"good"},
+    {n:"لوك شو", r:86, t:"good"}, {n:"ديوغو دالوت", r:84, t:"good"}, {n:"هاري ماجواير", r:82, t:"good"},
+    {n:"أليساندرو باستوني", r:90, t:"good"}, {n:"فيديريكو ديماركو", r:89, t:"good"}, {n:"بنجامين بافارد", r:87, t:"good"},
+    {n:"ماتيو داريان", r:82, t:"good"}, {n:"فرانشيسكو أتشيربي", r:85, t:"good"}, {n:"ستيفان دي فري", r:86, t:"good"},
+    {n:"ثيو هيرنانديز", r:91, t:"good"}, {n:"دافيدي كالابريا", r:83, t:"good"}, {n:"فيكايو توموري", r:87, t:"good"},
+    {n:"بيير كالولو", r:82, t:"good"}, {n:"مالك ثياو", r:81, t:"good"}, {n:"سيمون كير", r:83, t:"good"},
+    {n:"غليسون بريمير", r:88, t:"good"}, {n:"دانيلو", r:84, t:"good"}, {n:"أليكس ساندرو", r:81, t:"good"},
+    {n:"فيديريكو غاتي", r:83, t:"good"}, {n:"أندريا كامبياسو", r:84, t:"good"}, {n:"جيوفاني دي لورينزو", r:88, t:"good"},
+    {n:"أمير رحماني", r:84, t:"good"}, {n:"خوان جيسوس", r:80, t:"good"}, {n:"ماريو هيرموسو", r:83, t:"good"},
+    {n:"أكسيل فيتسل", r:84, t:"good"}, {n:"ستيفان سافيتش", r:83, t:"good"}, {n:"خوسيه ماريا خيمينيز", r:85, t:"good"},
+    {n:"سيزار أزبيليكويتا", r:83, t:"good"}, {n:"مات هوملز", r:86, t:"good"}, {n:"نيكلاس زولي", r:84, t:"good"},
+    {n:"نيكو شلوتربيك", r:86, t:"good"}, {n:"جوليان ريرسون", r:81, t:"good"}, {n:"رافاييل غيريرو", r:85, t:"good"},
+    {n:"جوناثان تاه", r:87, t:"good"}, {n:"إدموند تابسوبا", r:85, t:"good"}, {n:"أوديلون كوسونو", r:83, t:"good"},
+    {n:"جيريمي فريمبونغ", r:89, t:"good"}, {n:"أليخاندرو بالدي", r:84, t:"good"}, {n:"جواو كانسيلو", r:88, t:"good"},
+    {n:"إريك غارسيا", r:81, t:"good"}, {n:"جيرارد بيكيه", r:90, t:"good"}, {n:"كارليس بويول", r:94, t:"good"},
+    {n:"داني ألفيس", r:93, t:"good"}, {n:"جوردي ألبا", r:89, t:"good"}, {n:"خافيير ماسكيرانو", r:88, t:"good"},
+    {n:"بيبي", r:88, t:"good"}, {n:"مارسيلو", r:90, t:"good"}, {n:"روبرتو كارلوس", r:94, t:"good"},
+    {n:"باولو مالديني", r:96, t:"good"}, {n:"فابيو كانافارو", r:95, t:"good"}, {n:"أليساندرو نيستا", r:94, t:"good"},
+    {n:"فرانكو باريزي", r:95, t:"good"}, {n:"غايتانو شيريا", r:94, t:"good"}, {n:"أندريا بارزالي", r:89, t:"good"},
+    {n:"جورج كيليني", r:92, t:"good"}, {n:"ليوناردو بونوتشي", r:91, t:"good"}, {n:"فيليب لام", r:93, t:"good"},
+    {n:"جيروم بواتينغ", r:89, t:"good"}, {n:"لوسيو", r:91, t:"good"}, {n:"تياغو سيلفا", r:92, t:"good"},
+    {n:"صامويل أومتيتي", r:82, t:"good"}, {n:"كليمون لينجليه", r:80, t:"good"}, {n:"لوكاس هيرنانديز", r:86, t:"good"},
+    {n:"بنجامين ميندي", r:81, t:"good"}, {n:"كورت زوما", r:82, t:"good"}, {n:"مامادو ساكو", r:79, t:"good"},
+    {n:"لوران كوشيلني", r:86, t:"good"}, {n:"بير ميرتساكر", r:83, t:"good"}, {n:"توماس فيرمايلين", r:82, t:"good"},
+    {n:"باكاري سانيا", r:84, t:"good"}, {n:"غاييل كليشي", r:83, t:"good"}, {n:"أشلي كول", r:91, t:"good"},
+    {n:"نيمانيا فيديتش", r:93, t:"good"}, {n:"ريو فيرديناند", r:93, t:"good"}, {n:"باتريس إيفرا", r:90, t:"good"},
+    {n:"غاري نيفيل", r:87, t:"good"}, {n:"جون تيري", r:93, t:"good"}, {n:"اليكس كارفاليو", r:82, t:"good"},
+    {n:"برانيسلاف إيفانوفيتش", r:88, t:"good"}, {n:"آشلي كول", r:90, t:"good"}, {n:"ريكاردو كارفاليو", r:90, t:"good"},
+    {n:"فينسنت كومباني", r:91, t:"good"}, {n:"بابلو زاباليتا", r:86, t:"good"}, {n:"ألكسندر كولاروف", r:85, t:"good"},
+    {n:"جوليان ليسكوت", r:82, t:"good"}, {n:"مايك ريتشاردز", r:81, t:"good"}, {n:"ناثان ناثان", r:78, t:"good"},
+    {n:"ماركوس روخو", r:79, t:"good"}, {n:"فيل جونز", r:78, t:"good"}, {n:"كريس سمولينغ", r:83, t:"good"},
+    {n:"أنطونيو فالنسيا", r:86, t:"good"}, {n:"ماتيو دارميان", r:81, t:"good"}, {n:"اشلي يونغ", r:83, t:"good"},
+    {n:"ناثان آكي", r:85, t:"good"}, {n:"رييس جيمس", r:87, t:"good"}, {n:"بن تشيلويل", r:84, t:"good"},
+    {n:"تياغو سيلفا", r:90, t:"good"}, {n:"أنطونيو روديجر", r:91, t:"good"}, {n:"أندرياس كريستنسن", r:86, t:"good"},
+    {n:"سيزار أزبيليكويتا", r:86, t:"good"}, {n:"مارك كوكوريلا", r:83, t:"good"}, {n:"مالو غوستو", r:82, t:"good"},
+    {n:"ليني يورو", r:84, t:"good"}, {n:"جان كلير توديبو", r:85, t:"good"}, {n:"نايف أكرد", r:84, t:"good"},
+    {n:"رومان سايس", r:82, t:"good"}, {n:"مهدي بن عطية", r:86, t:"good"}, {n:"نصير مزراوي", r:84, t:"good"},
+    {n:"سفيان أمرابط", r:85, t:"good"}, {n:"أحمد حجازي", r:83, t:"good"}, {n:"محمد عبد المنعم", r:82, t:"good"},
+    {n:"علي معلول", r:85, t:"good"}, {n:"ياسر الشهراني", r:82, t:"good"}, {n:"سعود عبد الحميد", r:83, t:"good"},
+    {n:"علي البليهي", r:81, t:"good"}, {n:"حسن تمبكتي", r:82, t:"good"}, {n:"وليد عبد الله", r:78, t:"good"},
+
+    // --- عاديين/ضعاف (Bad) - 200 لاعب ---
+  ],
+GK: [
+    // --- بلندور Ballon d'Or: كل بلندور = 50 ريت ---
+    {n:"ليف ياشين", r:50, t:"ballon"},
+
+  // --- Premium Goalkeepers - 15 players ---
+{n:"مانويل نوير البرايم", r:150, t:"premium"},
+{n:"جانلويجي بوفون البرايم", r:149, t:"premium"},
+{n:"إيكر كاسياس البرايم", r:147, t:"premium"},
+{n:"ليف ياشين البرايم", r:146, t:"premium"},
+{n:"بيتر شمايكل البرايم", r:144, t:"premium"},
+{n:"أوليفر كان البرايم", r:143, t:"premium"},
+{n:"جيانلويجي دوناروما البرايم", r:141, t:"premium"},
+{n:"تيبو كورتوا البرايم", r:140, t:"premium"},
+{n:"أليسون بيكر البرايم", r:139, t:"premium"},
+{n:"مانويل نوير البرايم", r:138, t:"premium"},
+{n:"إدوين فان دير سار البرايم", r:137, t:"premium"},
+{n:"بيتر تشيك البرايم", r:136, t:"premium"},
+{n:"ديفيد سيمان البرايم", r:134, t:"premium"},
+{n:"كلاوديو تافاريل البرايم", r:132, t:"premium"},
+{n:"فابيان بارتيز البرايم", r:130, t:"premium"},
+
+// --- حراس مرمى معتزلون (Legends GK) - 20 حارساً ---
+  {n:"ليف ياشين", r:120, t: "legend"}, {n:"جانلويجي بوفون", r:120, t: "legend"},
+  {n:"بيتر شمايكل", r:118, t: "legend"}, {n:"إيكر كاسياس", r:117, t: "legend"},
+  {n:"مانويل نوير", r:118, t: "legend"}, {n:"أوليفر كان", r:116, t: "legend"},
+  {n:"إدوين فان دير سار", r:115, t: "legend"}, {n:"بيتر تشيك", r:115, t: "legend"},
+  {n:"دينو زوف", r:117, t: "legend"}, {n:"غوردون بانكس", r:116, t: "legend"},
+  {n:"تسو ريكاردو", r:110, t: "legend"}, {n:"خوسيه لويس تشيلافيرت", r:112, t: "legend"},
+  {n:"رينيه هيغيتا", r:111, t: "legend"}, {n:"سانتياغو كانيزاريس", r:110, t: "legend"},
+  {n:"فيكتور فالديز", r:111, t: "legend"}, {n:"ديدا", r:112, t: "legend"},
+  {n:"جوليو سيزار", r:111, t: "legend"}, {n:"فابيان بارتيز", r:110, t: "legend"},
+  {n:"والتر زينغا", r:111, t: "legend"}, {n:"عصام الحضري", r:112, t: "legend"},
+
+    // --- نجوم (Good) - 50 حارساً ---
+    {n:"تيبو كورتوا", r:95, t:"good"}, {n:"أليسون بيكر", r:95, t:"good"}, {n:"مانويل نوير", r:93, t:"good"},
+    {n:"إيدرسون", r:93, t:"good"}, {n:"ياسين بونو", r:90, t:"good"}, {n:"يان أوبلاك", r:91, t:"good"},
+    {n:"جيانلويجي دوناروما", r:91, t:"good"}, {n:"مارك أندريه تير شتيجن", r:92, t:"good"}, {n:"مايك ماينان", r:90, t:"good"},
+    {n:"إيمليانو مارتينيز", r:90, t:"good"}, {n:"كيفن تراب", r:89, t:"good"}, {n:"أندريه أونانا", r:89, t:"good"},
+    {n:"ديفيد دي خيا", r:88, t:"good"}, {n:"هوجو لوريس", r:88, t:"good"}, {n:"فويتشيخ تشيسني", r:87, t:"good"},
+    {n:"بيتر شمايكل", r:95, t:"good"}, {n:"جانلويجي بوفون", r:100, t:"good"}, {n:"إيكر كاسياس", r:96, t:"good"},
+    {n:"أوليفر كان", r:96, t:"good"}, {n:"مانويل نوير", r:95, t:"good"}, {n:"بيتر تشيك", r:94, t:"good"},
+    {n:"إدوين فان دير سار", r:94, t:"good"}, {n:"فيكتور فالديز", r:89, t:"good"}, {n:"كيلور نافاس", r:89, t:"good"},
+    {n:"يان سومر", r:88, t:"good"}, {n:"أرون رامسديل", r:85, t:"good"}, {n:"ديفيد رايا", r:88, t:"good"},
+    {n:"غولييلمو فيكاريو", r:87, t:"good"}, {n:"جورج بيتروفيتش", r:83, t:"good"}, {n:"جوردان بيكفورد", r:85, t:"good"},
+    {n:"نيك بوب", r:86, t:"good"}, {n:"دين هندرسون", r:83, t:"good"}, {n:"بريند لينو", r:84, t:"good"},
+    {n:"لوكاس هراديكي", r:85, t:"good"}, {n:"أليكس ميريت", r:85, t:"good"}, {n:"جريجور كوبيل", r:88, t:"good"},
+    {n:"مانويل نويير الأقمار", r:82, t:"good"}, {n:"ألفونس أريولا", r:83, t:"good"}, {n:"باو لوبيز", r:82, t:"good"},
+    {n:"أنتوني لوبيز", r:84, t:"good"}, {n:"ستيف مانداندا", r:83, t:"good"}, {n:"إدوارد ميندي", r:86, t:"good"},
+    {n:"محمد الشناوي", r:88, t:"good"}, {n:"ياسين بونو", r:90, t:"good"}, {n:"منير محجوبي", r:80, t:"good"},
+    {n:"روم روف", r:81, t:"good"}, {n:"كلاوديو برافو الأسطورة", r:85, t:"good"}, {n:"كارلوس كاميني", r:82, t:"good"},
+    {n:"مارك ماركيز", r:79, t:"good"}, {n:"بدر بانون الحارس", r:78, t:"good"},
+
+    // --- عاديين/ضعاف (Bad) - 50 حارساً ---
+  ],
+COACH: [
+  // --- Premium Coaches - 15 coaches ---
+{n:"بيب جوارديولا البرايم", r:150, t:"premium"},
+{n:"كارلو أنشيلوتي البرايم", r:149, t:"premium"},
+{n:"جوزيه مورينيو البرايم", r:148, t:"premium"},
+{n:"أليكس فيرجسون البرايم", r:150, t:"premium"},
+{n:"زين الدين زيدان البرايم", r:147, t:"premium"},
+{n:"يورغن كلوب البرايم", r:146, t:"premium"},
+{n:"أرسين فينغر البرايم", r:144, t:"premium"},
+{n:"فيسنتي ديل بوسكي البرايم", r:143, t:"premium"},
+{n:"فابيو كابيلو البرايم", r:142, t:"premium"},
+{n:"مارشيلو ليبي البرايم", r:141, t:"premium"},
+{n:"أريغو ساكي البرايم", r:140, t:"premium"},
+{n:"يوهان كرويف البرايم", r:139, t:"premium"},
+{n:"جوزيب جوارديولا البرايم", r:138, t:"premium"},
+{n:"جوزيه مورينيو البرايم", r:136, t:"premium"},
+{n:"سيموني إنزاغي البرايم", r:134, t:"premium"},
+
+// --- مدربون معتزلون (Legends Managers) - 20 مدرباً ---
+  {n:"أليكس فيرغسون", r:120, t:"legend"}, {n:"رينوس ميكيلز", r:119, t:"legend"},
+  {n:"يوهان كرويف", r:118, t:"legend"}, {n:"أريغو ساكي", r:116, t:"legend"},
+  {n:"بيسنتي ديل بوسكي", r:115, t:"legend"}, {n:"مارسيلو ليبي", r:114, t:"legend"},
+  {n:"يوب هاينكس", r:115, t:"legend"}, {n:"أوسكار تاباريز", r:111, t:"legend"},
+  {n:"فابيو كابيلو", r:114, t:"legend"}, {n:"جيوفاني تراباتوني", r:113, t:"legend"},
+  {n:"بوبي روبسون", r:112, t:"legend"}, {n:"لويس أراغونيس", r:113, t:"legend"},
+  {n:"أرسين فينغر", r:115, t:"legend"}, {n:"حسن شحاتة", r:111, t:"legend"},
+  {n:"فيسنتي ديل بوسكي", r:112, t:"legend"}, {n:"أوتو ريهاغل", r:113, t:"legend"},
+  {n:"بيتر تشيلسي", r:108, t:"legend"}, {n:"غوس هيدينك", r:112, t:"legend"},
+  {n:"فيم سوربيير", r:107, t:"legend"}, {n:"مارسيلو بيلسا", r:114, t:"legend"},
+
+   // --- مدربون (Good) - 20 مدرباً ---
+  {n:"بيب جوارديولا", r:99, t:"good"}, {n:"كارلو أنشيلوتي", r:98, t:"good"},
+  {n:"يورجن كلوب", r:97, t:"good"}, {n:"زين الدين زيدان", r:96, t:"good"},
+  {n:"جوزيه مورينيو", r:92, t:"good"}, {n:"دييغو سيميوني", r:93, t:"good"},
+  {n:"ماكس أليغري", r:90, t:"good"}, {n:"أنطونيو كونتي", r:91, t:"good"},
+  {n:"لويس إنريكي", r:92, t:"good"}, {n:"ميكيل أرتيتا", r:90, t:"good"},
+  {n:"تشافي هيرنانديز", r:88, t:"good"}, {n:"يان بييرو غاسبريني", r:89, t:"good"},
+  {n:"سيموني إنزاغي", r:91, t:"good"}, {n:"لوتشيانو سباليتي", r:90, t:"good"},
+  {n:"جوليان ناغلسمان", r:89, t:"good"}, {n:"أوناي إيمري", r:91, t:"good"},
+  {n:"توماس توخل", r:90, t:"good"}, {n:"إريك تن هاغ", r:86, t:"good"},
+  {n:"ستيفانو بيولي", r:87, t:"good"}, {n:"تشابي ألونسو", r:94, t:"good"},
+
+    // --- عاديين/ضعاف (Bad) - 20 مدرباً ---
+    {n:"مدرب محلي", r:55, t:"bad"}, {n:"مدرب هواة", r:45, t:"bad"}, {n:"مدرب مؤقت", r:50, t:"bad"},
+    {n:"فرانك دي بور", r:60, t:"bad"}, {n:"غاري نيفيل (مدرب)", r:58, t:"bad"}, {n:"فابيو كانافارو (مدرب)", r:62, t:"bad"},
+    {n:"تيري هنري (مدرب)", r:61, t:"bad"}
+  ]
+};
+</script>
+<script>
+/* ===================== المحرك المحلي (أوفلاين) ===================== */
+const CARDS_TYPES=[
+ {id:"red",name:"كارت الطرد 🟥",desc:"بيطرد لاعب عشوائي من فريقك (غير الحارس)."},
+ {id:"sub",name:"كارت التبديل 🔄",desc:"بيبدّل تشكيلتك كلها مع فريق تاني وتاخد لاعب الصندوق."},
+ {id:"fajer",name:"كارت الفاجر 💎",desc:"تبدّل لاعب بلاعب في نفس المركز تقييمه أعلى من 90."},
+ {id:"norisk",name:"نو ريسك نو فان 🎲",desc:"تبدّل لاعب بلاعب عشوائي في نفس المركز."},
+ {id:"cheater",name:"كارت الغشاش 🃏",desc:"لو خسرت الماتش بيتعاد مرة واحدة."},
+ {id:"nassab",name:"النصاب 🕵️",desc:"تبدّل لاعب من عندك بلاعب من فريق تاني في نفس المركز."},
+ {id:"protect",name:"كارت الحماية 🛡️",desc:"تحمي لاعب من كارت النصاب."},
+ {id:"reroll",name:"التالتة تبتة 🎯",desc:"الصناديق بتتغير ومتاخدش لاعب الكارت."}
+];
+const CARD_EMOJI={red:'🟥',sub:'🔄',fajer:'💎',norisk:'🎲',cheater:'🃏',nassab:'🕵️',protect:'🛡️',reroll:'🎯'};
+const CARD_COLORS={red:'#ff4a5a',sub:'#4cc9ff',fajer:'#ffc233',norisk:'#b58cff',cheater:'#3ddc72',nassab:'#ff8a3d',protect:'#2dd4bf',reroll:'#ff6fb5'};
+const TEAM_COLORS=['#4cc9ff','#ffc233','#3ddc72','#ff5fa0'],TEAM_ICONS=['👈','👉','⚡','🔥'];
+
+let usedPlayers=new Set(),isProcessingTurn=false,matchInterval=null,matchScriptEvents=[],currentMatchTime=0,matchStage='regular',teamCount=2,M={a:0,b:1},matchNo=1;
+let state={teams:[],draftQueue:[],currentStep:0,boxesData:[],openedBoxIdx:-1};
+const $=id=>document.getElementById(id);
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function showSetup(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('screen-setup').classList.add('active');window.scrollTo(0,0);}
+function setTeamCount(n){
+  teamCount=n;
+  document.querySelectorAll('.tc-btn').forEach(b=>b.classList.toggle('active',Number(b.dataset.count)===n));
+  $('team-card-3').style.display=n>=3?'block':'none';$('team-card-4').style.display=n>=4?'block':'none';
+}
+function tierInfo(p){const t=(p&&p.t)||'good';
+  if(t==='ballon')return{cls:'t-ballon',label:'بلندور 🟣'};
+  if(t==='premium')return{cls:'t-premium',label:'برايم 🔥'};if(t==='legend')return{cls:'t-legend',label:'أسطورة 👑'};
+  if(t==='bad')return{cls:'t-bad',label:'عادي'};return{cls:'t-good',label:'نجم ⭐'};}
+function playerBoxHTML(p,pos){const ti=tierInfo(p);const icon=p.t==='ballon'?'🏆':(p.t==='premium'?'🔥':'🏃');return `<div class="icon">${icon}</div><div class="name">${p.n}</div><div class="rating">⭐ ${p.r}</div><div class="props"><span>${ti.label}</span><span>${pos}</span></div>`;}
+function showToast(msg){const t=$('toast');t.innerText=msg;t.style.display='block';clearTimeout(showToast.t);showToast.t=setTimeout(()=>{t.style.display='none';},2500);}
+function showEventModal(title,sub,emoji){$('event-modal-content').innerHTML=`<div class="emoji">${emoji}</div><h2>${title}</h2><p>${sub}</p>`;$('event-modal').classList.add('active');}
+function hideEventModal(){$('event-modal').classList.remove('active');}
+
+function triggerFx(type,tIdx){
+  const o=$('fx-overlay');o.innerHTML='';
+  if(type==='goal'){
+    const b=document.createElement('div');b.className='fx-ball '+(tIdx===0?'anim-ltr':'anim-rtl');b.innerText='⚽';b.style.top='45%';
+    const t=document.createElement('div');t.className='fx-text anim-save';t.innerText='⚽ هـــــدف!';
+    o.appendChild(b);o.appendChild(t);
+  }else{
+    const c=document.createElement('div');c.className='anim-save';c.style.cssText='position:relative;display:flex;flex-direction:column;align-items:center';
+    c.innerHTML='<div class="fx-ball" style="position:relative">⚽<span class="save-cross">❌</span></div><div class="fx-text" style="position:relative;margin-top:20px;border-color:#ff4a5a;color:#ff4a5a">🧤 تصدي خرافي!</div>';
+    o.appendChild(c);
+  }
+  setTimeout(()=>{o.innerHTML='';},1600);
+}
+
+function calculateCoordinates(fmt){
+  const p=fmt.split('-').map(Number),c=[{x:50,y:11}];
+  for(let i=0;i<p[0];i++)c.push({x:100/(p[0]+1)*(i+1),y:30});
+  const m=p.length===4?p[1]+p[2]:p[1];for(let i=0;i<m;i++)c.push({x:100/(m+1)*(i+1),y:58});
+  const a=p[p.length-1];for(let i=0;i<a;i++)c.push({x:100/(a+1)*(i+1),y:85});
+  return c;
+}
+function buildSlotsFromFormat(fmt){
+  const p=fmt.split('-').map(Number),s=[{cat:'GK',label:'حارس المرمى'}];
+  for(let i=0;i<p[0];i++)s.push({cat:'DEF',label:`مدافع ${i+1}`});
+  const m=p.length===4?p[1]+p[2]:p[1];for(let i=0;i<m;i++)s.push({cat:'MID',label:`وسط ${i+1}`});
+  for(let i=0;i<p[p.length-1];i++)s.push({cat:'ATT',label:`مهاجم ${i+1}`});
+  return s;
+}
+
+/* ---- البطولة ---- */
+function setupBracket(){
+  const n=state.teams.length;
+  state.bracket=n===2?[{a:0,b:1,final:true}]:n===3?[{a:0,b:1,final:false},{aFrom:0,b:2,final:true}]:[{a:0,b:1,final:false},{a:2,b:3,final:false},{aFrom:0,bFrom:1,final:true}];
+  state.bracketIdx=0;state.winners=[];state.matchHistory=[];
+}
+function resolveTeam(e,side){return side==='a'?(e.a!==undefined?e.a:state.winners[e.aFrom]):(e.b!==undefined?e.b:state.winners[e.bFrom]);}
+function matchLabel(i){const e=state.bracket[i];if(e.final)return 'النهائي';return state.bracket.length===3?(i===0?'نصف النهائي الأول':'نصف النهائي الثاني'):'الماتش الأول';}
+function startBracketMatch(i){state.bracketIdx=i;const e=state.bracket[i];showVSScreen(resolveTeam(e,'a'),resolveTeam(e,'b'),i+1);}
+function goNextBracketMatch(){startBracketMatch(state.bracketIdx+1);}
+
+function initDraft(){
+  const cfg=[['t1-name','t1-fmt','الفريق الأول'],['t2-name','t2-fmt','الفريق الثاني'],['t3-name','t3-fmt','الفريق الثالث'],['t4-name','t4-fmt','الفريق الرابع']];
+  onlineMode=false;state.teams=[];
+  for(let i=0;i<teamCount;i++){const fmt=$(cfg[i][1]).value;
+    state.teams.push({name:$(cfg[i][0]).value||cfg[i][2],fmt,slots:buildSlotsFromFormat(fmt),players:new Array(11).fill(null),coach:null,cards:[],usedEnd:[],score:0,penScore:null,cheaterUsed:false});}
+  state.teams.forEach((t,i)=>{$(`p${i+1}-title`).innerText=`${TEAM_ICONS[i]} ${t.name}`;});
+  $('pitch-wrap-3').style.display=teamCount>=3?'flex':'none';$('pitch-wrap-4').style.display=teamCount>=4?'flex':'none';
+  $('pitches-container').classList.toggle('three',teamCount===3);
+  state.draftQueue=[];
+  for(let i=0;i<11;i++)state.teams.forEach((t,ti)=>state.draftQueue.push({teamIdx:ti,slot:t.slots[i],slotIdx:i}));
+  state.teams.forEach((t,ti)=>state.draftQueue.push({teamIdx:ti,slot:{cat:'COACH',label:'المدرب'},slotIdx:-1}));
+  state.currentStep=0;usedPlayers.clear();setupBracket();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('screen-arena').classList.add('active');
+  renderPitches();renderTurn();
+}
+
+/* ---- فريم الكروت ---- */
+function getCardById(id){return CARDS_TYPES.find(c=>c.id===id);}
+function isCardUsed(t,id){if(id==='sub'||id==='reroll')return true;if(id==='cheater')return !!t.cheaterUsed;return(t.usedEnd||[]).includes(id);}
+function cardsFrameHTML(t){
+  const l=t.cards||[];
+  const body=l.length?l.map(id=>{const c=getCardById(id);if(!c)return'';const u=isCardUsed(t,id);return `<span class="cf-chip${u?' used':''}" style="--c:${CARD_COLORS[id]}" title="${c.desc}"><span class="cf-name">${c.name}</span><small>${u?'اتستخدم':'جاهز'}</small></span>`;}).join(''):'<span class="cf-empty">لسه مجاش أي كارت</span>';
+  return `<div class="cf-title"><span>🎴 كروت ${esc(t.name)}</span><span>${l.length}</span></div><div class="cf-list">${body}</div>`;
+}
+function renderCardFrames(){state.teams.forEach((t,i)=>{const e=$(`cards-${i+1}`);if(e)e.innerHTML=cardsFrameHTML(t);});}
+function teamOverallRating(team){return (team.players||[]).reduce((sum,p)=>sum+(p?.data?.r||0),0)+(team.coach?.r||0);}
+function renderPitches(flash){
+  state.teams.forEach((team,tIdx)=>{
+    const layer=$(`pitch-${tIdx+1}`).querySelector('.dots-layer');layer.innerHTML='';
+    const coords=calculateCoordinates(team.fmt);
+    team.players.forEach((p,idx)=>{
+      if(!p)return;const c=coords[idx]||{x:50,y:50},d=document.createElement('div');
+      const prem=p.data&&p.data.t==='premium'&&!p.isRedCarded;const ballon=p.data&&p.data.t==='ballon'&&!p.isRedCarded;
+      d.className=`player-dot ${p.isRedCarded?'red-carded':''} ${p.protected?'protected':''} ${prem?'premium':''} ${ballon?'ballon':''} ${flash?'pop':''}`;
+      d.style.left=c.x+'%';d.style.bottom=c.y+'%';
+      d.innerHTML=`<div class="node">${p.data.r}</div><div class="p-name">${p.data.n}</div>`;
+      layer.appendChild(d);
+    });
+    const titleEl=$(`p${tIdx+1}-title`);if(titleEl)titleEl.innerText=`${team.name} · إجمالي الريت: ${teamOverallRating(team)}`;
+    if(team.coach)$(`coach-${tIdx+1}`).innerText=`👨‍💼 المدرب: ${team.coach.n} (⭐${team.coach.r})`;
+  });
+  renderCardFrames();
+}
+
+/* ---- المزاد ---- */
+function renderTurn(){
+  isProcessingTurn=false;$('boxes-container').style.pointerEvents='auto';
+  if(state.currentStep>=state.draftQueue.length)return processEndCards();
+  const step=state.draftQueue[state.currentStep],team=state.teams[step.teamIdx];
+  $('turn-team-title').innerText=`${team.name} · إجمالي الريت: ${teamOverallRating(team)}`;$('turn-team-title').style.color=TEAM_COLORS[step.teamIdx];
+  $('turn-pos-desc').innerText=`اختيار: ${step.slot.label}`;$('deal-actions').style.display='none';
+  state.openedBoxIdx=-1;state.boxesData=generateBoxes(step.slot.cat,step.teamIdx);renderBoxesUI();
+}
+function generateBoxes(cat,teamIdx){
+  const boxes=[],team=state.teams[teamIdx],chosen=new Set();
+  const cardIdx=(cat!=='COACH'&&Math.random()<0.22)?Math.floor(Math.random()*4):-1;
+  for(let i=0;i<4;i++){
+    if(i===cardIdx){
+      const av=CARDS_TYPES.filter(c=>!team.cards.includes(c.id));
+      if(av.length){const card=rnd(av),p=getRandomUniquePlayer(cat,chosen);chosen.add(p.n);usedPlayers.add(p.n);boxes.push({type:'card',cardData:card,player:p});continue;}
+    }
+    const p=getRandomUniquePlayer(cat,chosen);chosen.add(p.n);usedPlayers.add(p.n);boxes.push({type:'player',player:p});
+  }
+  return boxes;
+}
+function getRandomUniquePlayer(cat,set){
+  const l=DB[cat].filter(p=>!usedPlayers.has(p.n)&&!set.has(p.n));
+  return l.length?rnd(l):{n:`لاعب ${cat} ${Math.floor(Math.random()*999)}`,r:80,t:'good'};
+}
+function renderBoxesUI(){
+  const c=$('boxes-container');c.innerHTML='';
+  state.boxesData.forEach((b,i)=>{const d=document.createElement('div');d.className='box';d.innerHTML=`<div class="num">صندوق ${i+1}</div><div class="icon">📦</div><div class="name">مغلق</div>`;d.onclick=()=>onBoxClick(i);c.appendChild(d);});
+}
+async function onBoxClick(idx){
+  if(isProcessingTurn)return;
+  const els=document.querySelectorAll('.box');
+  if(state.openedBoxIdx===-1){
+    state.openedBoxIdx=idx;const b=state.boxesData[idx];els[idx].classList.add('opened');
+    if(b.type==='card')els[idx].innerHTML='<div class="icon">🎁</div><div class="name">كارت البنك</div>';
+    else{els[idx].classList.add(tierInfo(b.player).cls);els[idx].innerHTML=playerBoxHTML(b.player,state.draftQueue[state.currentStep].slot.label);}
+    $('deal-actions').style.display='block';
+  }else if(state.openedBoxIdx!==idx){
+    isProcessingTurn=true;$('boxes-container').style.pointerEvents='none';$('deal-actions').style.display='none';
+    await finalizeChoice(idx);
+  }
+}
+async function acceptDeal(){
+  if(isProcessingTurn)return;isProcessingTurn=true;
+  $('boxes-container').style.pointerEvents='none';$('deal-actions').style.display='none';
+  await finalizeChoice(state.openedBoxIdx);
+}
+async function finalizeChoice(ci){
+  const els=document.querySelectorAll('.box'),step=state.draftQueue[state.currentStep],team=state.teams[step.teamIdx],cd=state.boxesData[ci];
+  for(let i=0;i<4;i++){
+    const b=state.boxesData[i],el=els[i];el.className='box'+(i===ci?' opened':' missed');
+    if(b.type==='card'){el.classList.add('is-card');el.innerHTML=`<div class="icon">💳</div><div class="name">${b.cardData.name}</div><div class="card-desc">${b.cardData.desc}</div><div class="props"><span>${b.player.n}</span><span>⭐ ${b.player.r}</span></div>`;}
+    else{el.classList.add(tierInfo(b.player).cls);el.innerHTML=playerBoxHTML(b.player,step.slot.label);}
+  }
+  const place=()=>{team.players[step.slotIdx]={cat:step.slot.cat,label:step.slot.label,data:cd.player,isRedCarded:false,protected:false};};
+  if(step.slot.cat==='COACH'){team.coach=cd.player;showToast(`👨‍💼 ${cd.player.n} أصبح مدرب ${team.name}!`);renderPitches();await wait(1600);}
+  else if(cd.type==='card'){
+    team.cards.push(cd.cardData.id);renderCardFrames();
+    if(cd.cardData.id==='sub'){
+      const target=await chooseOpponent(step.teamIdx,'🔄',cd.cardData.name,'اختار الفريق اللي هتبدل تشكيلتك معاه');
+      await performFullSquadSwap(team,target,cd.player,step.slot,step.slotIdx);
+    }else if(cd.cardData.id==='reroll'){
+      showToast(`🎯 ${team.name} استخدم التالتة تبتة! الصناديق اتغيرت`);await wait(2200);renderTurn();return;
+    }else{place();renderPitches();showToast(`🎁 ${cd.player.n} انضم لـ ${team.name} + كارت: ${cd.cardData.name}`);await wait(1700);}
+  }else{place();renderPitches();showToast(`✅ ${cd.player.n} ينضم لـ ${team.name}!`);await wait(1600);}
+  state.currentStep++;renderTurn();
+}
+async function performFullSquadSwap(team,opp,won,slot,slotIdx){
+  const ti=state.teams.indexOf(team),oi=state.teams.indexOf(opp);
+  const l1=$(`pitch-${ti+1}`).querySelector('.dots-layer'),l2=$(`pitch-${oi+1}`).querySelector('.dots-layer');
+  const w1=$(`pitch-${ti+1}`).closest('.pitch-wrapper'),w2=$(`pitch-${oi+1}`).closest('.pitch-wrapper');
+  w1.classList.add('shaking');w2.classList.add('shaking');$('swap-flash').classList.add('active');l1.classList.add('swap-out');l2.classList.add('swap-out');
+  await wait(480);w1.classList.remove('shaking');w2.classList.remove('shaking');$('swap-flash').classList.remove('active');
+  const already=opp.players[slotIdx],tmp=team.players;team.players=opp.players;opp.players=tmp;
+  team.players[slotIdx]={cat:slot.cat,label:slot.label,data:won,isRedCarded:false,protected:false};
+  if(already)opp.players[slotIdx]=already;
+  renderPitches(true);l1.classList.remove('swap-out');l2.classList.remove('swap-out');
+  showEventModal('🔄🔥 تبديل التشكيلة الكاملة!',`${team.name} بدّل تشكيلته بالكامل مع ${opp.name}!\nوحصل كمان على ${won.n}.`,'🔄');
+  await wait(2600);hideEventModal();
+}
+
+/* ---- نوافذ الاختيار والكروت ---- */
+function pickFromList(emoji,title,sub,items){
+  return new Promise(resolve=>{
+    $('pick-emoji').innerText=emoji;$('pick-title').innerText=title;$('pick-sub').innerText=sub;
+    const l=$('pick-list');l.innerHTML='';
+    items.forEach((it,i)=>{const b=document.createElement('button');b.className='pick-item';b.disabled=!!it.disabled;
+      b.innerHTML=`<span>${it.name}<br><small>${it.sub}</small></span><span class="r">${it.tag!==undefined?it.tag:'⭐ '+it.r}</span>`;
+      b.onclick=()=>{$('pick-modal').classList.remove('active');resolve(i);};l.appendChild(b);});
+    $('pick-modal').classList.add('active');
+  });
+}
+async function chooseOpponent(tIdx,emoji,title,sub){
+  const others=state.teams.filter((t,i)=>i!==tIdx);if(others.length===1)return others[0];
+  const k=await pickFromList(emoji,`${state.teams[tIdx].name}: ${title}`,sub,others.map(t=>({name:t.name,sub:'التشكيلة '+t.fmt,tag:'👥'})));
+  return others[k];
+}
+async function useProtectCard(t){
+  const team=state.teams[t],card=getCardById('protect'),c=team.players.filter(p=>p&&!p.isRedCarded);if(!c.length)return;
+  const i=await pickFromList(CARD_EMOJI.protect,`${team.name}: ${card.name}`,'اختار اللاعب اللي عايز تحميه من السرقة',c.map(p=>({name:p.data.n,sub:p.label,r:p.data.r})));
+  c[i].protected=true;renderPitches(true);
+  showEventModal(card.name,`${team.name}: ${c[i].data.n} بقى محمي 🛡️`,CARD_EMOJI.protect);await wait(2400);hideEventModal();
+}
+async function useReplaceCard(t,cardId){
+  const team=state.teams[t],fajer=cardId==='fajer',card=getCardById(cardId),c=team.players.filter(p=>p&&!p.isRedCarded);if(!c.length)return;
+  const i=await pickFromList(CARD_EMOJI[cardId],`${team.name}: ${card.name}`,fajer?'اختار اللاعب اللي هتبدله بلاعب تقييمه أعلى من 90':'اختار اللاعب اللي هتبدله بلاعب عشوائي',c.map(p=>({name:p.data.n,sub:p.label,r:p.data.r})));
+  const s=c[i],old=s.data.n,pool=DB[s.cat].filter(p=>!usedPlayers.has(p.n)&&(!fajer||p.r>90));
+  if(!pool.length){showToast('⚠️ مفيش لاعب متاح في المركز ده');await wait(1600);return;}
+  const np=rnd(pool);usedPlayers.add(np.n);s.data=np;renderPitches(true);
+  showEventModal(card.name,`${team.name}: تم تبديل ${old} (${s.label})\nبـ ${np.n} ⭐ ${np.r}`,CARD_EMOJI[cardId]);await wait(2600);hideEventModal();
+}
+async function useNassabCard(t){
+  const team=state.teams[t],card=getCardById('nassab');
+  const opp=await chooseOpponent(t,CARD_EMOJI.nassab,card.name,'اختار الفريق اللي عايز تنصب عليه');
+  const mine=team.players.filter(p=>p&&!p.isRedCarded&&!p.protected);if(!mine.length)return;
+  const i=await pickFromList(CARD_EMOJI.nassab,`${team.name}: ${card.name}`,'اختار لاعبك اللي هتبدله',mine.map(p=>({name:p.data.n,sub:p.label,r:p.data.r})));
+  const my=mine[i],th=opp.players.filter(p=>p&&!p.isRedCarded&&p.cat===my.cat);
+  if(!th.filter(p=>!p.protected).length){showToast(th.length?`🛡️ لاعبين ${opp.name} في المركز ده محميين`:'⚠️ مفيش لاعب في نفس المركز');await wait(1800);return;}
+  const j=await pickFromList(CARD_EMOJI.nassab,`${team.name}: ${card.name}`,`اختار لاعب من ${opp.name} تبدله بـ ${my.data.n}`,th.map(p=>({name:p.data.n,sub:p.label,r:p.data.r,disabled:!!p.protected,tag:p.protected?'🛡️ محمي':undefined})));
+  const tp=th[j],a=my.data.n,b=tp.data.n,tmp=my.data;my.data=tp.data;tp.data=tmp;
+  renderPitches(true);showEventModal(card.name,`${team.name} خد ${b} من ${opp.name}\nوادّاله ${a}!`,CARD_EMOJI.nassab);await wait(2800);hideEventModal();
+}
+async function processEndCards(){
+  const n=state.teams.length,mark=(t,id)=>{(t.usedEnd=t.usedEnd||[]).push(id);renderCardFrames();};
+  for(let t=0;t<n;t++)if(state.teams[t].cards.includes('protect')){await useProtectCard(t);mark(state.teams[t],'protect');}
+  for(let t=0;t<n;t++){const team=state.teams[t];
+    for(const id of team.cards){
+      if(id==='fajer'||id==='norisk'){await useReplaceCard(t,id);mark(team,id);}
+      else if(id==='nassab'){await useNassabCard(t);mark(team,id);}
+    }}
+  for(let t=0;t<n;t++){const team=state.teams[t];
+    for(const id of team.cards){if(id!=='red')continue;
+      const pool=team.players.filter(p=>p&&!p.isRedCarded&&p.cat!=='GK');if(!pool.length){mark(team,'red');continue;}
+      const v=rnd(pool),nm=v.data.n;v.isRedCarded=true;v.data={n:nm,r:0};renderPitches();mark(team,'red');
+      showEventModal('🟥 طرد!',`${team.name}: تم طرد ${nm} (${v.label})`,'🟥');await wait(2300);hideEventModal();}}
+  startBracketMatch(0);
+}
+function showVSScreen(a,b,no){
+  M={a,b};matchNo=no||1;state.bracketIdx=matchNo-1;const e=state.bracket[state.bracketIdx];
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('screen-vs').classList.add('active');
+  if(state.bracket.length===1){$('vs-title').innerText='مواجهة العمالقة ⚔️';$('vs-sub').innerText='التشكيلات مكتملة وجاهزة للمباراة!';}
+  else if(e.final){$('vs-title').innerText='النهائي الكبير ⚔️';$('vs-sub').innerText=`${state.teams[a].name} يواجه ${state.teams[b].name}`;}
+  else{$('vs-title').innerText=`مواجهة رقم ${state.bracketIdx+1} ⚔️`;$('vs-sub').innerText='التشكيلات مكتملة!';}
+  [a,b].forEach((ti,k)=>{const n=k+1;
+    $(`vs-t${n}-title`).innerText=state.teams[ti].name;$(`vs-t${n}-title`).style.color=TEAM_COLORS[ti];
+    $(`vs-pitch-${n}`).innerHTML=$(`pitch-${ti+1}`).innerHTML;$(`vs-pitch-${n}`).style.setProperty('--dot',TEAM_COLORS[ti]);
+    $(`vs-cards-${n}`).innerHTML=cardsFrameHTML(state.teams[ti]);});
+}
+
+/* ===================== المباراة ===================== */
+function newStats(){return{goals:0,assists:0,saves:0,misses:0,penGoals:0,penMiss:0,penSaves:0};}
+function st(p){return p.stats||(p.stats=newStats());}
+function resetMatchStats(t){t.players.forEach(p=>{if(p)p.stats=newStats();});}
+function teamGK(t){return t.players.find(p=>p&&p.cat==='GK')||null;}
+const SCORER_W={ATT:6,MID:3,DEF:1,GK:0},ASSIST_W={MID:4,ATT:3,DEF:1.5,GK:0};
+function pickWeighted(team,w,ex){
+  const pool=team.players.filter(p=>p&&!p.isRedCarded&&p!==ex&&(w[p.cat]||0)>0);if(!pool.length)return null;
+  const ws=pool.map(p=>w[p.cat]*Math.pow(Math.max(p.data.r,40)/100,2));let x=Math.random()*ws.reduce((a,b)=>a+b,0);
+  for(let i=0;i<pool.length;i++){x-=ws[i];if(x<=0)return pool[i];}return pool[pool.length-1];
+}
+function mTeam(side){return state.teams[side===0?M.a:M.b];}
+
+const GOAL_TPL=[
+ {a:true,f:(s,a)=>`تمريرة حاسمة سحرية من <b>${a}</b> يضع بها <b>${s}</b> في مواجهة المرمى ليسجل هدفاً عالمياً! ⚽🔥`},
+ {a:true,f:(s,a)=>`عرضية متقنة من <b>${a}</b> يرتقي لها <b>${s}</b> ويوجه رأسية صاروخية في الشباك! ⚽💥`},
+ {a:false,f:s=>`<b>${s}</b> يطلق قذيفة من خارج المنطقة لا تصد ولا ترد! ⚽🚀`},
+ {a:false,f:s=>`مجهود فردي خرافي! <b>${s}</b> يتلاعب بالدفاع ويسدد في الزاوية التسعين! ⚽🎯`},
+ {a:true,f:(s,a)=>`تمريرة بينية قاتلة من <b>${a}</b> تصل إلى <b>${s}</b> الذي ينفرد بالحارس ويسجل بهدوء! ⚽🔥`},
+ {a:false,f:s=>`<b>${s}</b> يخدع المدافع ثم يسدد كرة مقوسة تسكن الزاوية البعيدة! 🎯🔥`}
+];
+const SAVE_TPL=[
+ {k:true,f:s=>`تسديدة قوية من <b>${s}</b> والحارس يطير ويتصدى لها بأعجوبة! 🧤🔥`},
+ {k:true,f:s=>`<b>${s}</b> ينفرد بالحارس لكن الحارس يثبت وينقذ مرماه! 🧤⛔`},
+ {k:false,f:s=>`تسديدة رائعة من <b>${s}</b> ترتطم بالقائم وتخرج! 😱❌`},
+ {k:false,f:s=>`<b>${s}</b> يسدد صاروخاً لكن الكرة تمر بجوار القائم بسنتيمترات! 🚀❌`},
+ {k:true,f:s=>`رأسية خطيرة من <b>${s}</b> والحارس يبعدها بأطراف أصابعه! 🧤💥`}
+];
+function makeGoalEvent(team){
+  const scorer=pickWeighted(team,SCORER_W);let tpl=rnd(GOAL_TPL),assist=null;
+  if(tpl.a){assist=pickWeighted(team,ASSIST_W,scorer);if(!assist)tpl=GOAL_TPL.find(t=>!t.a);}
+  return{scorer,assist,text:tpl.f(scorer?scorer.data.n:'اللاعب',assist?assist.data.n:'خط الوسط')};
+}
+function makeSaveEvent(team,opp){const sh=pickWeighted(team,SCORER_W),tpl=rnd(SAVE_TPL);return{shooter:sh,keeper:tpl.k?teamGK(opp):null,text:tpl.f(sh?sh.data.n:'المهاجم')};}
+function generateMatchScript(s=1,e=90){
+  const ev=[],ex=e>90,count=Math.floor(Math.random()*(ex?2:5))+(ex?1:3),times=[];
+  for(let i=0;i<count;i++)times.push(Math.floor(Math.random()*(e-s))+s);times.sort((a,b)=>a-b);
+  times.forEach(m=>{const t=Math.random()>.5?0:1,goal=Math.random()<.48,base=goal?makeGoalEvent(mTeam(t)):makeSaveEvent(mTeam(t),mTeam(1-t));ev.push({min:m,tIdx:t,type:goal?'goal':'save',done:false,...base});});
+  return ev;
+}
+function registerEvent(ev){
+  ev.done=true;
+  if(ev.type==='goal'){mTeam(ev.tIdx).score++;if(ev.scorer)st(ev.scorer).goals++;if(ev.assist)st(ev.assist).assists++;}
+  else{if(ev.shooter)st(ev.shooter).misses++;if(ev.keeper)st(ev.keeper).saves++;}
+}
+function appendLogItem(type,html){const l=$('m-log'),d=document.createElement('div');d.className=`log-item ${type}`;d.innerHTML=html;l.appendChild(d);l.scrollTop=l.scrollHeight;}
+
+function startMatch(isReplay){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('screen-match').classList.add('active');
+  $('match-label').innerText=state.bracket.length>1?matchLabel(state.bracketIdx):'';
+  if(isReplay===true){appendLogItem('pen','🔁 <b>إعادة المباراة من الأول بفضل كارت الغشاش!</b>');$('m-timer').innerText=0;}else $('m-log').innerHTML='';
+  $('m-team1').innerText=mTeam(0).name;$('m-team2').innerText=mTeam(1).name;$('m-score').innerText='0 - 0';
+  $('btn-show-results').style.display='none';$('btn-skip-match').style.display='block';
+  mTeam(0).score=0;mTeam(1).score=0;mTeam(0).penScore=null;mTeam(1).penScore=null;resetMatchStats(mTeam(0));resetMatchStats(mTeam(1));
+  matchStage='regular';currentMatchTime=0;matchScriptEvents=generateMatchScript(1,90);
+  if(matchInterval)clearInterval(matchInterval);
+  matchInterval=setInterval(async()=>{
+    currentMatchTime++;$('m-timer').innerText=currentMatchTime;
+    matchScriptEvents.filter(e=>e.min===currentMatchTime&&!e.done).forEach(processMatchEvent);
+    if(currentMatchTime===90&&matchStage==='regular'){
+      if(mTeam(0).score===mTeam(1).score){matchStage='extra';appendLogItem('save',`⏱️ <b>تعادل (${mTeam(0).score}-${mTeam(1).score})! أشواط إضافية...🔥</b>`);matchScriptEvents.push(...generateMatchScript(91,120));}
+      else finishMatch();
+    }else if(currentMatchTime===120&&matchStage==='extra'){
+      if(mTeam(0).score===mTeam(1).score){matchStage='penalties';clearInterval(matchInterval);$('btn-skip-match').style.display='none';appendLogItem('pen','⚽ <b>تعادل! ركلات الترجيح 🎯</b>');await runPenaltyShootout(false);}
+      else finishMatch();
+    }
+  },100);
+}
+function processMatchEvent(ev){
+  appendLogItem(ev.type,`<b>${ev.min}'</b> - ${ev.text}`);registerEvent(ev);
+  if(ev.type==='goal'){$('m-score').innerText=`${mTeam(0).score} - ${mTeam(1).score}`;triggerFx('goal',ev.tIdx);}else triggerFx('save',ev.tIdx);
+}
+function penaltyTakers(team){
+  const v=team.players.filter(p=>p&&!p.isRedCarded),o=v.filter(p=>p.cat!=='GK').sort((a,b)=>b.data.r-a.data.r),l=o.concat(v.filter(p=>p.cat==='GK'));
+  return l.length?l:[{cat:'ATT',data:{n:'اللاعب',r:60}}];
+}
+async function runPenaltyShootout(instant=false){
+  let p1=0,p2=0;const t1=mTeam(0),t2=mTeam(1),k1=penaltyTakers(t1),k2=penaltyTakers(t2),g1=teamGK(t1),g2=teamGK(t2);
+  appendLogItem('pen','<b>🎯 بدء ركلات الترجيح!</b>');let r=1;
+  while(r<=5||p1===p2){
+    const s1=k1[(r-1)%k1.length],G1=Math.random()<.72;if(G1){p1++;st(s1).penGoals++;}else{st(s1).penMiss++;if(g2)st(g2).penSaves++;}
+    appendLogItem(G1?'goal':'save',`<b>ركلة ${r}:</b> ${esc(t1.name)} - ${s1.data.n} ${G1?'⚽ سجّلها!':'❌ أهدرها'}`);if(!instant){triggerFx(G1?'goal':'save',0);await wait(800);}
+    const s2=k2[(r-1)%k2.length],G2=Math.random()<.72;if(G2){p2++;st(s2).penGoals++;}else{st(s2).penMiss++;if(g1)st(g1).penSaves++;}
+    appendLogItem(G2?'goal':'save',`<b>ركلة ${r}:</b> ${esc(t2.name)} - ${s2.data.n} ${G2?'⚽ سجّلها!':'❌ أهدرها'}`);if(!instant){triggerFx(G2?'goal':'save',1);await wait(800);}
+    if(r>=5&&p1!==p2)break;
+    if(r<5){const left=5-r;if(p1>p2+left||p2>p1+left)break;}
+    r++;
+  }
+  t1.penScore=p1;t2.penScore=p2;
+  appendLogItem('pen',`<b>🎉 فوز ${esc(p1>p2?t1.name:t2.name)} بالترجيح (${p1} - ${p2})!</b>`);
+  $('m-score').innerText=`${t1.score} - ${t2.score} (${p1} - ${p2} ركلات)`;finishMatch();
+}
+async function skipMatch(){
+  if(matchStage==='penalties')return;if(matchInterval)clearInterval(matchInterval);$('btn-skip-match').style.display='none';
+  const q=ev=>{appendLogItem(ev.type,`<b>${ev.min}'</b> - ${ev.text}`);registerEvent(ev);};
+  matchScriptEvents.filter(e=>!e.done&&e.min<=90).forEach(q);currentMatchTime=90;$('m-timer').innerText='90';$('m-score').innerText=`${mTeam(0).score} - ${mTeam(1).score}`;
+  if(matchStage==='regular'&&mTeam(0).score===mTeam(1).score){matchStage='extra';appendLogItem('save','⏱️ <b>تعادل! أشواط إضافية...🔥</b>');matchScriptEvents.push(...generateMatchScript(91,120));}
+  if(matchStage==='extra'){matchScriptEvents.filter(e=>!e.done&&e.min>90).forEach(q);currentMatchTime=120;$('m-timer').innerText='120';$('m-score').innerText=`${mTeam(0).score} - ${mTeam(1).score}`;}
+  if(mTeam(0).score===mTeam(1).score){matchStage='penalties';appendLogItem('pen','⚽ <b>ركلات الترجيح 🎯</b>');await runPenaltyShootout(true);}else finishMatch();
+}
+function getLoserSide(){
+  const a=mTeam(0),b=mTeam(1);if(a.score>b.score)return 1;if(b.score>a.score)return 0;
+  if(a.penScore!==null&&b.penScore!==null&&a.penScore!==b.penScore)return a.penScore>b.penScore?1:0;return -1;
+}
+function matchSummaryText(){const a=mTeam(0),b=mTeam(1);let s=`${a.name} ${a.score} - ${b.score} ${b.name}`;if(a.penScore!==null&&b.penScore!==null)s+=` (ترجيح ${a.penScore}-${b.penScore})`;return s;}
+function finishMatch(){
+  if(matchInterval)clearInterval(matchInterval);
+  const t1=mTeam(0),t2=mTeam(1),sc=t1.penScore!==null?`${t1.score} - ${t2.score} (${t1.penScore} - ${t2.penScore} ترجيح)`:`${t1.score} - ${t2.score}`;
+  appendLogItem('pen',`🏆 <b>صفارة النهاية! النتيجة: ${sc}</b>`);
+  const ls=getLoserSide();
+  if(ls!==-1){const l=mTeam(ls);
+    if(l.cards.includes('cheater')&&!l.cheaterUsed){
+      l.cheaterUsed=true;renderCardFrames();$('btn-skip-match').style.display='none';$('btn-show-results').style.display='none';
+      appendLogItem('pen',`🃏 <b>كارت الغشاش! ${esc(l.name)} خسر.. والماتش هيتعاد!</b>`);
+      showEventModal('🃏 كارت الغشاش!',`${esc(l.name)} خسر..\nالماتش هيتعاد من الأول!`,'🃏');
+      setTimeout(()=>{hideEventModal();startMatch(true);},3000);return;}}
+  state.winners[state.bracketIdx]=ls===-1?null:(ls===0?M.b:M.a);
+  state.matchHistory.push({label:matchLabel(state.bracketIdx),text:matchSummaryText()});
+  if(state.bracketIdx<state.bracket.length-1){
+    const ne=state.bracket[state.bracketIdx+1],nm=i=>i!=null?state.teams[i].name:'الفايز';
+    const an=ne.a!==undefined?nm(ne.a):nm(state.winners[ne.aFrom]),bn=ne.b!==undefined?nm(ne.b):nm(state.winners[ne.bFrom]);
+    $('btn-show-results').innerText=`⚔️ ${ne.final?'النهائي':'الماتش القادم'}: ${an} ضد ${bn}`;
+  }else $('btn-show-results').innerText='📊 عرض تقييمات اللاعبين';
+  $('btn-skip-match').style.display='none';$('btn-show-results').style.display='flex';
+}
+
+/* ===================== التقييمات ===================== */
+function baseRating(r){return 5.6+(Math.min(r,150)/150)*2.4;}
+function sideResultBonus(side){const l=getLoserSide();if(l===-1)return 0;const pens=mTeam(0).score===mTeam(1).score;return l===side?(pens?-.1:-.3):(pens?.1:.3);}
+function calcRating(p,opp,bonus){
+  if(p.isRedCarded)return 0;const s=st(p);let v=baseRating(p.data.r);
+  for(let i=0;i<s.goals;i++)v+=Math.max(.5,1-.2*i);
+  v+=s.assists*.6-s.misses*.08+s.penGoals*.15-s.penMiss*.4+s.penSaves*.5;
+  const c=opp.score;
+  if(p.cat==='GK'){v+=s.saves*.4-c*.3;if(c===0)v+=.8;}
+  else if(p.cat==='DEF'){if(c===0)v+=.5;else if(c>=3)v-=.3;}
+  else if(p.cat==='MID'&&c===0)v+=.2;
+  v+=bonus+(Math.random()-.5)*.4;return Math.round(Math.max(4.5,Math.min(10,v))*10)/10;
+}
+function contribScore(p){const s=st(p);return s.goals*2+s.assists+s.saves*.3;}
+function contribText(p){const s=st(p),a=[];if(s.goals)a.push(`⚽ ${s.goals}`);if(s.assists)a.push(`🅰️ ${s.assists}`);if(p.cat==='GK'&&s.saves)a.push(`🧤 ${s.saves}`);return a.join(' · ');}
+function ratingRowsHTML(rows,best){
+  return rows.map(r=>{const p=r.p,isB=best&&best.p===p,ico=p.isRedCarded?'':contribText(p);
+    const col=r.val>=8.5?'#3ddc72':r.val>=7?'#ffc233':r.val>0?'#ff8d98':'#ff4a5a';
+    return `<div class="rating-row${isB?' motm':''}"><span>${isB?'⭐ ':''}${p.data.n} <span class="pos">${p.label}</span> <span>${ico}</span></span><span class="rv" style="color:${col}">${p.isRedCarded?'0.0 🟥':r.val.toFixed(1)}</span></div>`;}).join('');
+}
+function showResultsScreen(){
+  if(state.bracketIdx<state.bracket.length-1){goNextBracketMatch();return;}
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$('screen-results').classList.add('active');
+  const t1=mTeam(0),t2=mTeam(1);let w='';
+  if(t1.score>t2.score)w=`🏆 البطل: ${t1.name}`;else if(t2.score>t1.score)w=`🏆 البطل: ${t2.name}`;
+  else if(t1.penScore!==null&&t2.penScore!==null)w=`🏆 البطل: ${t1.penScore>t2.penScore?t1.name:t2.name} (ترجيح ${t1.penScore}-${t2.penScore})`;else w='🤝 تعادل!';
+  $('winner-banner').innerText=w;
+  $('tour-summary').innerText=state.matchHistory.length>1?state.matchHistory.map(h=>`${h.label}: ${h.text}`).join('\n'):'';
+  const rows=[0,1].map(side=>{const team=mTeam(side),opp=mTeam(1-side),b=sideResultBonus(side);return team.players.filter(Boolean).map(p=>({p,side,val:calcRating(p,opp,b)}));});
+  const all=rows[0].concat(rows[1]).filter(r=>!r.p.isRedCarded).sort((x,y)=>(y.val-x.val)||(contribScore(y.p)-contribScore(x.p))||(y.p.data.r-x.p.data.r));
+  const best=all[0]||null;
+  $('motm-banner').innerText=best?`⭐ رجل المباراة: ${best.p.data.n} (${mTeam(best.side).name}) — ${best.val.toFixed(1)}${contribText(best.p)?' — '+contribText(best.p):''}`:'';
+  $('res-t1-name').innerText=t1.name;$('res-t2-name').innerText=t2.name;$('res-t1-name').style.color=TEAM_COLORS[M.a];$('res-t2-name').style.color=TEAM_COLORS[M.b];
+  $('res-t1-list').innerHTML=ratingRowsHTML(rows[0],best);$('res-t2-list').innerHTML=ratingRowsHTML(rows[1],best);
+}
+</script>
+<script>
+/* =========================================================
+   ONLINE LAYER v2  —  حط الكود ده مكان آخر <script> في الملف (اللي فيه (function(){ ... })();)
+   المضيف (Host) بيشغّل محرك اللعبة الأوفلاين نفسه، واللاعبين التانيين بيشوفوا نسخة مرآة ويبعتوله اختياراتهم.
+   اللعب المحلي (أوفلاين) شغال زي ما هو بدون أي تغيير.
+========================================================= */
+(function(){
+  let ch=null, pollT=null, snapT=null, setupT=null, bt=null, lastLog=-1, snapN=0, claimedRoom=null, polling=false, pickUid=null;
+  const pend={};
+  const isHost=()=>!!(currentRoom&&onlineUser&&currentRoom.host_user_id===onlineUser.id);
+  const need=()=>Number(currentRoom?.team_count||2);
+  const G=()=>!!(onlineMode&&currentRoom);
+  const go=id=>{document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);};
+  const send=async(ev,d)=>{ if(!ch||!onlineUser)return; try{await ch.send({type:'broadcast',event:ev,payload:{...d,sender:onlineUser.id}});}catch(e){console.warn('send',ev,e);} };
+  window.onlineIsHost=isHost;
+
+  /* نسخ المحرك الأصلي قبل ما نلفّ حواليه */
+  const C={renderPitches,renderTurn,finalizeChoice,onBoxClick,acceptDeal,showVSScreen,startMatch,finishMatch,triggerFx,showEventModal,hideEventModal,pickFromList,chooseOpponent,useProtectCard,useReplaceCard,useNassabCard,showSetup};
+
+  /* ---------- حالة اللعبة: تسلسل / تطبيق ---------- */
+  const ser=()=>({teams:state.teams.map(t=>({name:t.name,fmt:t.fmt,onlineUserId:t.onlineUserId,coach:t.coach,cards:t.cards||[],usedEnd:t.usedEnd||[],cheaterUsed:!!t.cheaterUsed,score:t.score||0,penScore:t.penScore,players:(t.players||[]).map(p=>p?{cat:p.cat,label:p.label,data:p.data,isRedCarded:!!p.isRedCarded,protected:!!p.protected}:null)})),draftQueue:state.draftQueue,currentStep:state.currentStep,boxesData:state.boxesData,openedBoxIdx:state.openedBoxIdx,revealed:!!state.revealed});
+  const apply=s=>{state.teams=s.teams;state.draftQueue=s.draftQueue;state.currentStep=s.currentStep;state.boxesData=s.boxesData;state.openedBoxIdx=s.openedBoxIdx;state.revealed=s.revealed;teamCount=state.teams.length;if(!state.bracket||state.bracket.length!==(teamCount===2?1:teamCount===3?2:3))setupBracket();};
+  const layout=()=>{state.teams.forEach((t,i)=>{$(`p${i+1}-title`).innerText=`${TEAM_ICONS[i]} ${t.name}`;});$('pitch-wrap-3').style.display=teamCount>=3?'flex':'none';$('pitch-wrap-4').style.display=teamCount>=4?'flex':'none';$('pitches-container').classList.toggle('three',teamCount===3);};
+  const bcast=()=>send('fifa-draft-state',{state:ser()});
+  const bLater=()=>{clearTimeout(bt);bt=setTimeout(bcast,60);};
+
+  /* ---------- عرض المزاد (مرآة) ---------- */
+  function face(d,b,label,full){
+    if(b.type==='card'){
+      if(!full)return '<div class="icon">🎁</div><div class="name">كارت البنك</div>';
+      d.classList.add('is-card','card-'+b.cardData.id);
+      return `<div class="icon">💳</div><div class="name">${b.cardData.name}</div><div class="card-desc">${b.cardData.desc}</div><div class="props"><span>${b.player.n}</span><span>⭐ ${b.player.r}</span></div>`;
+    }
+    d.classList.add(tierInfo(b.player).cls);
+    return playerBoxHTML(b.player,label);
+  }
+  function banner(){
+    const step=state.draftQueue[state.currentStep];
+    if(!step){$('turn-team-title').innerText='⚙️ تفعيل الكروت';$('turn-pos-desc').innerText='استنى.. الكروت بتشتغل قبل الماتش';$('boxes-container').innerHTML='';$('deal-actions').style.display='none';return false;}
+    const t=state.teams[step.teamIdx],mine=t.onlineUserId===onlineUser.id;
+    $('turn-team-title').innerText=t.name+(mine?' — دورك ✅':' — دور الخصم ⏳');
+    $('turn-team-title').style.color=TEAM_COLORS[step.teamIdx];
+    $('turn-pos-desc').innerText='اختيار: '+step.slot.label;
+    return true;
+  }
+  function mirrorBoxes(){
+    const step=state.draftQueue[state.currentStep],box=$('boxes-container');
+    box.innerHTML='';
+    if(!step||!state.boxesData||state.boxesData.length!==4)return;
+    const mine=state.teams[step.teamIdx].onlineUserId===onlineUser.id;
+    state.boxesData.forEach((b,i)=>{
+      const d=document.createElement('div');d.className='box';
+      if(state.revealed||i===state.openedBoxIdx){d.className='box'+(i===state.openedBoxIdx?' opened':' missed');d.innerHTML=face(d,b,step.slot.label,state.revealed);}
+      else d.innerHTML=`<div class="num">صندوق ${i+1}</div><div class="icon">📦</div><div class="name">مغلق</div>`;
+      d.onclick=()=>onBoxClick(i);
+      box.appendChild(d);
+    });
+    box.style.pointerEvents=(mine&&!state.revealed)?'auto':'none';
+    $('deal-actions').style.display=(mine&&!state.revealed&&state.openedBoxIdx>=0)?'block':'none';
+  }
+  function mirror(){go('screen-arena');layout();C.renderPitches();if(banner())mirrorBoxes();}
+
+  /* ---------- أغلفة المحرك (بتشتغل بس لو أونلاين) ---------- */
+  renderPitches=function(f){C.renderPitches(f);if(G()&&isHost()&&onlineGame.phase==='draft')bLater();};
+  renderTurn=function(){
+    if(!G())return C.renderTurn();
+    state.revealed=false;
+    C.renderTurn();
+    const step=state.draftQueue[state.currentStep];
+    if(step){if(banner()&&state.teams[step.teamIdx].onlineUserId!==onlineUser.id)mirrorBoxes();}else banner();
+    bcast();
+  };
+  finalizeChoice=async function(i){
+    if(G()){state.revealed=true;state.openedBoxIdx=i;bcast();}
+    return C.finalizeChoice(i);
+  };
+  onBoxClick=async function(idx){
+    if(!G())return C.onBoxClick(idx);
+    const step=state.draftQueue[state.currentStep];if(!step||state.revealed)return;
+    if(state.teams[step.teamIdx].onlineUserId!==onlineUser.id){showToast('⏳ استنى دورك');return;}
+    if(isHost()){const was=state.openedBoxIdx;await C.onBoxClick(idx);if(was===-1)bcast();return;}
+    if(state.openedBoxIdx===-1){state.openedBoxIdx=idx;mirrorBoxes();send('fifa-box',{action:'open',idx});}
+    else if(state.openedBoxIdx!==idx){$('deal-actions').style.display='none';send('fifa-box',{action:'choose',idx});}
+  };
+  acceptDeal=async function(){
+    if(!G()||isHost())return C.acceptDeal();
+    if(state.openedBoxIdx<0||state.revealed)return;
+    $('deal-actions').style.display='none';
+    send('fifa-box',{action:'choose',idx:state.openedBoxIdx});
+  };
+  triggerFx=function(t,i){C.triggerFx(t,i);if(G()&&isHost())send('fifa-fx',{type:t,tIdx:i});};
+  showEventModal=function(t,s,e){C.showEventModal(t,s,e);if(G()&&isHost())send('fifa-modal',{t,s,e});};
+  hideEventModal=function(){C.hideEventModal();if(G()&&isHost())send('fifa-modal-hide',{});};
+
+  /* الكروت اللي فيها اختيار: السؤال بيروح للاعب صاحب الفريق */
+  const asUid=t=>{pickUid=state.teams[t]?.onlineUserId||null;};
+  useProtectCard=t=>{asUid(t);return C.useProtectCard(t);};
+  useReplaceCard=(t,c)=>{asUid(t);return C.useReplaceCard(t,c);};
+  useNassabCard=t=>{asUid(t);return C.useNassabCard(t);};
+  chooseOpponent=(t,...a)=>{asUid(t);return C.chooseOpponent(t,...a);};
+  pickFromList=function(emoji,title,sub,items){
+    if(!G()||!pickUid||pickUid===onlineUser.id){
+      if(G())send('fifa-modal',{t:title,s:'⏳ بيختار...',e:emoji});
+      return C.pickFromList(emoji,title,sub,items).then(r=>{if(G())send('fifa-modal-hide',{});return r;});
+    }
+    return new Promise(res=>{
+      const id=Math.random().toString(36).slice(2),ok=items.map((x,i)=>x.disabled?-1:i).filter(i=>i>=0);
+      const to=setTimeout(()=>{if(pend[id]){delete pend[id];res(ok.length?ok[Math.floor(Math.random()*ok.length)]:0);}},90000);
+      pend[id]=r=>{clearTimeout(to);res(r);};
+      C.showEventModal(title,'⏳ في انتظار اختيار اللاعب...',emoji);
+      send('fifa-modal',{t:title,s:'⏳ في انتظار اختيار اللاعب...',e:emoji});
+      send('fifa-prompt',{id,to:pickUid,emoji,title,sub,items});
+    }).then(r=>{C.hideEventModal();send('fifa-modal-hide',{});return r;});
+  };
+
+  /* ---------- VS + المباراة ---------- */
+  showVSScreen=function(a,b,no){
+    C.showVSScreen(a,b,no);
+    if(!G())return;
+    onlineGame.phase='vs';onlineGame.matchNo=no;
+    const btn=document.querySelector('#screen-vs button');if(btn)btn.style.display='none';
+    if(!isHost())return;
+    send('fifa-vs',{state:ser(),a,b,no});
+    setTimeout(()=>{if(onlineGame.phase==='vs'&&state.bracketIdx+1===no)startMatch(false);},4500);
+  };
+  const snap=force=>{
+    const log=$('m-log'),n=log.children.length;
+    const d={no:state.bracketIdx+1,t1:$('m-team1').innerText,t2:$('m-team2').innerText,score:$('m-score').innerText,timer:$('m-timer').innerText,label:$('match-label').innerText};
+    if(force===true||n!==lastLog||snapN++%5===0){d.log=log.innerHTML;lastLog=n;}
+    send('fifa-match',d);
+  };
+  startMatch=function(rp){
+    if(!G())return C.startMatch(rp);
+    if(!isHost())return;
+    onlineGame.phase='match';
+    document.querySelector('.match-actions').style.display='flex';
+    C.startMatch(rp);
+    lastLog=-1;clearInterval(snapT);snapT=setInterval(snap,400);
+  };
+  finishMatch=function(){
+    C.finishMatch();
+    if(!G()||!isHost())return;
+    clearInterval(snapT);snap(true);
+    if($('btn-show-results').style.display!=='flex')return;   // كارت الغشاش: الماتش هيتعاد
+    $('btn-show-results').style.display='none';
+    const last=state.bracketIdx>=state.bracket.length-1;
+    setTimeout(async()=>{showResultsScreen();if(last)await afterResults();},3500);
+  };
+  async function afterResults(){
+    const L=getLoserSide(),uid=L===-1?null:mTeam(L===0?1:0)?.onlineUserId;
+    const g=id=>$(id);
+    const res={banner:g('winner-banner').innerText,motm:g('motm-banner').innerText,tour:g('tour-summary').innerText,n1:g('res-t1-name').innerText,n2:g('res-t2-name').innerText,c1:g('res-t1-name').style.color,c2:g('res-t2-name').style.color,l1:g('res-t1-list').innerHTML,l2:g('res-t2-list').innerHTML,winner:uid};
+    onlineGame.phase='finished';
+    if(uid&&sb&&currentRoom){try{await sb.from('matches').insert({room_id:currentRoom.id,winner_user_id:uid});}catch(e){console.warn('matches insert',e);}}
+    send('fifa-results',res);
+    if(uid===onlineUser.id)tryClaim();
+  }
+  async function tryClaim(){
+    if(!currentRoom||claimedRoom===currentRoom.id)return;
+    claimedRoom=currentRoom.id;
+    await new Promise(r=>setTimeout(r,800));
+    try{await claimOnlineMatch();}catch(e){console.warn('claim',e);}
+  }
+  window.newGame=function(){if(onlineMode)leave();else location.reload();};
+
+  /* ---------- استقبال الرسائل ---------- */
+  function onMsg(ev,p){
+    if(!p||p.sender===onlineUser?.id)return;
+    if(ev==='fifa-formation'){
+      onlineSetup.formations[p.uid]={name:p.name,fmt:p.fmt,username:p.username};
+      if(onlineGame.phase==='setup'){renderSetup();if(isHost())maybeDraft();}
+      return;
+    }
+    if(ev==='fifa-start'){if(!isHost())beginSetup();return;}
+    if(isHost()){
+      if(ev==='fifa-box')hostBox(p);
+      else if(ev==='fifa-answer'&&pend[p.id]){const f=pend[p.id];delete pend[p.id];f(p.idx);}
+      return;
+    }
+    if(ev==='fifa-draft-state'){onlineGame.phase='draft';apply(p.state);mirror();}
+    else if(ev==='fifa-vs'){onlineGame.phase='vs';onlineGame.matchNo=p.no;apply(p.state);layout();C.renderPitches();C.showVSScreen(p.a,p.b,p.no);const b=document.querySelector('#screen-vs button');if(b)b.style.display='none';}
+    else if(ev==='fifa-match'){
+      if(p.no!==onlineGame.matchNo)return;
+      if(onlineGame.phase!=='match'){onlineGame.phase='match';go('screen-match');document.querySelector('.match-actions').style.display='none';}
+      $('m-team1').innerText=p.t1;$('m-team2').innerText=p.t2;$('m-score').innerText=p.score;$('m-timer').innerText=p.timer;$('match-label').innerText=p.label||'';
+      if(p.log!==undefined){const l=$('m-log');l.innerHTML=p.log;l.scrollTop=l.scrollHeight;}
+    }
+    else if(ev==='fifa-fx')C.triggerFx(p.type,p.tIdx);
+    else if(ev==='fifa-modal')C.showEventModal(p.t,p.s,p.e);
+    else if(ev==='fifa-modal-hide')C.hideEventModal();
+    else if(ev==='fifa-prompt'){
+      if(p.to!==onlineUser.id)return;
+      C.hideEventModal();
+      C.pickFromList(p.emoji,p.title,p.sub,p.items).then(i=>send('fifa-answer',{id:p.id,idx:i}));
+    }
+    else if(ev==='fifa-results'){
+      onlineGame.phase='finished';go('screen-results');
+      $('winner-banner').innerText=p.banner;$('motm-banner').innerText=p.motm;$('tour-summary').innerText=p.tour;
+      $('res-t1-name').innerText=p.n1;$('res-t2-name').innerText=p.n2;$('res-t1-name').style.color=p.c1;$('res-t2-name').style.color=p.c2;
+      $('res-t1-list').innerHTML=p.l1;$('res-t2-list').innerHTML=p.l2;
+      if(p.winner===onlineUser.id)tryClaim();
+    }
+  }
+  async function hostBox(p){
+    const step=state.draftQueue[state.currentStep];
+    if(!step||isProcessingTurn||state.revealed||state.teams[step.teamIdx].onlineUserId!==p.sender)return;
+    const i=Number(p.idx);if(!(i>=0&&i<4))return;
+    if(p.action==='open'){if(state.openedBoxIdx===-1){state.openedBoxIdx=i;mirrorBoxes();bcast();}}
+    else if(p.action==='choose'&&state.openedBoxIdx>=0){isProcessingTurn=true;await finalizeChoice(i);}
+  }
+
+  /* ---------- اللوبي ---------- */
+  async function members(){
+    if(!currentRoom||!sb)return null;
+    const {data,error}=await sb.from('room_players').select('user_id,ready').eq('room_id',currentRoom.id);
+    if(error){console.warn('members',error);return null;}
+    const ids=(data||[]).map(x=>x.user_id),pl={};
+    if(ids.length){const r=await sb.from('players').select('user_id,username,points').in('user_id',ids);(r.data||[]).forEach(x=>pl[x.user_id]=x);}
+    const list=(data||[]).map(m=>({user_id:m.user_id,ready:!!m.ready,username:pl[m.user_id]?.username||'Player',points:pl[m.user_id]?.points||0}));
+    list.sort((a,b)=>(b.user_id===currentRoom.host_user_id)-(a.user_id===currentRoom.host_user_id));
+    return list;
+  }
+  function renderRoom(list){
+    $('room-members').innerHTML=list.map(m=>`<div class="member-row"><span class="member-name">${esc(m.username)} <small>⭐ ${m.points}</small></span><span class="ready-badge ${m.ready?'on':''}">${m.ready?'جاهز':'مش جاهز'}</span></div>`).join('');
+    const all=list.length===need()&&list.every(x=>x.ready);
+    $('start-online-game-btn').style.display=isHost()&&all?'block':'none';
+    $('room-status-text').innerText=`${list.length}/${need()} لاعبين · ${all?'الكل جاهز':'في انتظار اللاعبين'}`;
+    $('ready-btn').innerText=list.find(x=>x.user_id===onlineUser?.id)?.ready?'إلغاء الجاهزية':'جاهز';
+  }
+  async function refreshRoom(){const l=await members();if(l)renderRoom(l);return l;}
+
+  async function createRoom(){
+    if(!onlineProfile||!onlineUser||!ensureSupabaseClient()){showScreen('screen-auth');return;}
+    const team_count=Math.max(2,Math.min(4,Number($('online-team-count')?.value||2)));
+    for(let k=0;k<8;k++){
+      const room_code=randomRoomCode();
+      const {data:room,error}=await sb.from('rooms').insert({room_code,host_user_id:onlineUser.id,team_count,status:'waiting'}).select().single();
+      if(error){if(String(error.code||'')==='23505')continue;onlineError('تعذر إنشاء الغرفة: '+(error.message||''));return;}
+      const {error:e2}=await sb.from('room_players').upsert({room_id:room.id,user_id:onlineUser.id,ready:false},{onConflict:'room_id,user_id'});
+      if(e2){await sb.from('rooms').delete().eq('id',room.id);onlineError('تعذر إدخالك الغرفة: '+(e2.message||''));return;}
+      await enterRoom(room);showToast(`✅ الغرفة اتعملت — ${team_count} فرق`);return;
+    }
+    onlineError('تعذر إنشاء غرفة جديدة. جرّب تاني.');
+  }
+  async function joinRoom(){
+    if(!onlineProfile||!onlineUser||!ensureSupabaseClient()){showScreen('screen-auth');return;}
+    const code=($('join-room-code').value||'').trim().toUpperCase();
+    if(!/^[A-Z0-9]{6}$/.test(code)){onlineError('اكتب كود الغرفة كامل: 6 حروف/أرقام.');return;}
+    const {data:room,error}=await sb.from('rooms').select('*').eq('room_code',code).eq('status','waiting').maybeSingle();
+    if(error||!room){onlineError('الغرفة غير موجودة أو بدأت بالفعل.');return;}
+    if(room.host_user_id!==onlineUser.id){
+      const {count}=await sb.from('room_players').select('*',{count:'exact',head:true}).eq('room_id',room.id);
+      const {data:mine}=await sb.from('room_players').select('user_id').eq('room_id',room.id).eq('user_id',onlineUser.id).maybeSingle();
+      if(!mine&&(count||0)>=Number(room.team_count||2)){onlineError('الغرفة ممتلئة.');return;}
+      const {error:je}=await sb.from('room_players').upsert({room_id:room.id,user_id:onlineUser.id,ready:false},{onConflict:'room_id,user_id'});
+      if(je){onlineError('لم يتم دخول الغرفة: '+(je.message||''));return;}
+    }
+    await enterRoom(room);
+  }
+  function resetGame(){
+    onlineSetup={me:null,other:null,ready:{},formations:{},members:[]};
+    onlineGame={phase:'idle',hostId:null,teams:null};
+    clearInterval(snapT);clearInterval(setupT);
+  }
+  async function bind(){
+    if(ch){try{await sb.removeChannel(ch);}catch(_){}}
+    ch=sb.channel('fifa-online:'+currentRoom.id,{config:{broadcast:{self:false}}});
+    ch.on('broadcast',{event:'*'},m=>onMsg(m.event,m.payload));
+    currentRoomChannel=ch;
+    await new Promise(res=>{let d=false;const t=setTimeout(()=>{if(!d){d=true;res();}},3000);ch.subscribe(s=>{if(!d&&['SUBSCRIBED','CHANNEL_ERROR','TIMED_OUT'].includes(s)){d=true;clearTimeout(t);res();}});});
+  }
+  async function enterRoom(room){
+    if(!room||!onlineUser||!sb)return;
+    resetGame();currentRoom=room;onlineMode=true;
+    try{localStorage.setItem('fifa_current_room_'+onlineUser.id,room.id);}catch(_){}
+    await bind();await refreshRoom();
+    $('current-room-box').classList.remove('online-hidden');$('current-room-code').innerText=room.room_code;
+    clearInterval(pollT);pollT=setInterval(poll,2500);
+    if(room.status==='playing')await beginSetup();else showOnlineLobby();
+  }
+  async function leave(msg){
+    const uid=onlineUser?.id,room=currentRoom;
+    clearInterval(pollT);resetGame();
+    try{if(room&&uid&&sb){await sb.from('room_players').delete().eq('room_id',room.id).eq('user_id',uid);if(room.host_user_id===uid)await sb.from('rooms').update({status:'closed'}).eq('id',room.id);}}catch(e){console.warn('leave',e);}
+    if(ch&&sb){try{await sb.removeChannel(ch);}catch(_){}}
+    ch=null;currentRoomChannel=null;currentRoom=null;onlineMode=false;
+    $('current-room-box')?.classList.add('online-hidden');
+    if(uid)try{localStorage.removeItem('fifa_current_room_'+uid);}catch(_){}
+    if(msg)showToast(msg);
+    showOnlineLobby();
+  }
+  async function poll(){
+    if(!currentRoom||!sb||!onlineUser||polling)return;
+    polling=true;
+    try{
+      const {data:room}=await sb.from('rooms').select('*').eq('id',currentRoom.id).maybeSingle();
+      if(!room||room.status==='closed'){if(onlineGame.phase!=='finished'&&currentRoom)await leave('الغرفة اتقفلت');return;}
+      currentRoom=room;
+      const l=await members();if(!l)return;
+      if(onlineGame.phase==='idle'){renderRoom(l);if(room.status==='playing')await beginSetup();}
+      else if(onlineGame.phase!=='finished'&&l.length<need())await leave('لاعب خرج من الغرفة واللعبة اتقفلت');
+    }finally{polling=false;}
+  }
+  async function toggleReady(){
+    if(!currentRoom||!onlineUser||!sb)return;
+    const {data:me}=await sb.from('room_players').select('ready').eq('room_id',currentRoom.id).eq('user_id',onlineUser.id).maybeSingle();
+    await sb.from('room_players').update({ready:!me?.ready}).eq('room_id',currentRoom.id).eq('user_id',onlineUser.id);
+    await refreshRoom();
+  }
+  async function startGame(){
+    if(!isHost()){showToast('لازم تكون صاحب الغرفة.');return;}
+    const l=await members();
+    if(!l||l.length!==need()||!l.every(x=>x.ready)){if(l)renderRoom(l);showToast(`⏳ لازم كل ${need()} لاعبين يبقوا جاهزين.`);return;}
+    const {error}=await sb.from('rooms').update({status:'playing'}).eq('id',currentRoom.id);
+    if(error){onlineError('تعذر بدء الغرفة: '+(error.message||''));return;}
+    currentRoom.status='playing';
+    send('fifa-start',{});
+    await beginSetup();
+  }
+
+  /* ---------- اسم الفريق + التشكيلة ---------- */
+  function renderSetup(){
+    go('screen-online-setup');
+    const m=onlineSetup.members||[],F=onlineSetup.formations;
+    $('online-setup-preview').innerHTML=m.map((x,i)=>{const f=F[x.user_id];return `<div class="online-player-chip"><b>${esc(f?.name||x.username)}</b><small>الفريق ${i+1}${f?.fmt?' · '+esc(f.fmt):''}</small></div>`;}).join('<div class="online-lock">⚔️</div>');
+    const nameEl=$('online-my-team-name');if(nameEl&&!nameEl.value)nameEl.value=onlineProfile.username+' FC';
+    const done=!!F[onlineUser.id],cnt=m.filter(x=>F[x.user_id]).length;
+    $('online-confirm-setup').disabled=done;
+    $('online-setup-status').innerText=done?`✅ تم تأكيد فريقك. جاهز ${cnt}/${m.length} — في انتظار الباقي...`:`اختار اسم فريقك وتشكيلتك ثم اضغط تأكيد. جاهز ${cnt}/${m.length}`;
+  }
+  async function beginSetup(){
+    if(onlineGame.phase!=='idle')return;
+    onlineGame.phase='setup';
+    const l=await members();
+    if(!l){onlineGame.phase='idle';return;}
+    onlineSetup.members=l;
+    renderSetup();
+    clearInterval(setupT);
+    setupT=setInterval(()=>{const f=onlineSetup.formations[onlineUser.id];if(f&&onlineGame.phase==='setup')send('fifa-formation',{...f,uid:onlineUser.id});},2000);
+    maybeDraft();
+  }
+  async function confirmSetup(){
+    if(onlineGame.phase!=='setup')return;
+    const f={name:$('online-my-team-name').value.trim()||onlineProfile.username,fmt:$('online-my-format').value||'4-3-3',username:onlineProfile.username};
+    onlineSetup.formations[onlineUser.id]=f;renderSetup();
+    await send('fifa-formation',{...f,uid:onlineUser.id});
+    maybeDraft();
+  }
+  function maybeDraft(){
+    if(!isHost()||onlineGame.phase!=='setup')return;
+    const m=onlineSetup.members,F=onlineSetup.formations;
+    if(m.length!==need()||!m.every(x=>F[x.user_id]))return;
+    onlineGame.phase='draft';clearInterval(setupT);
+    state.teams=m.map(x=>{const f=F[x.user_id];return{name:f.name,fmt:f.fmt,slots:buildSlotsFromFormat(f.fmt),players:new Array(11).fill(null),coach:null,cards:[],usedEnd:[],score:0,penScore:null,cheaterUsed:false,onlineUserId:x.user_id};});
+    teamCount=state.teams.length;layout();
+    state.draftQueue=[];
+    for(let i=0;i<11;i++)state.teams.forEach((t,ti)=>state.draftQueue.push({teamIdx:ti,slot:t.slots[i],slotIdx:i}));
+    state.teams.forEach((t,ti)=>state.draftQueue.push({teamIdx:ti,slot:{cat:'COACH',label:'المدرب'},slotIdx:-1}));
+    state.currentStep=0;state.revealed=false;usedPlayers.clear();setupBracket();
+    go('screen-arena');C.renderPitches();renderTurn();
+  }
+
+  /* ---------- دعوات + خروج + تشغيل ---------- */
+  loadInvites=async function(){
+    if(!onlineUser||!sb)return;
+    const {data}=await sb.from('invitations').select('id,room_id,from_user_id').eq('to_user_id',onlineUser.id).eq('status','pending').order('created_at',{ascending:false});
+    const rows=data||[],names={},rooms={};
+    const uids=[...new Set(rows.map(x=>x.from_user_id))],rids=[...new Set(rows.map(x=>x.room_id))];
+    if(uids.length){const r=await sb.from('players').select('user_id,username').in('user_id',uids);(r.data||[]).forEach(x=>names[x.user_id]=x.username);}
+    if(rids.length){const r=await sb.from('rooms').select('id,room_code,status').in('id',rids);(r.data||[]).forEach(x=>rooms[x.id]=x);}
+    const open=rows.filter(i=>rooms[i.room_id]?.status==='waiting');
+    $('invite-count').innerText=open.length;
+    $('invite-list').innerHTML=open.map(i=>`<div class="invite-row"><span><b>${esc(names[i.from_user_id]||'Player')}</b> دعاك للغرفة <b>${esc(rooms[i.room_id].room_code)}</b></span><span><button class="btn btn-primary mini" onclick="answerInvite('${i.id}',true)">قبول</button> <button class="btn btn-secondary mini" onclick="answerInvite('${i.id}',false)">رفض</button></span></div>`).join('');
+  };
+  logoutPlayer=async function(){
+    if(currentRoom)await leave();
+    const uid=onlineUser?.id;
+    try{if(sb)await sb.auth.signOut();}catch(_){}
+    try{if(uid)localStorage.removeItem('fifa_current_room_'+uid);}catch(_){}
+    onlineUser=null;onlineProfile=null;showScreen('screen-auth');
+  };
+  showSetup=function(){C.showSetup();if(onlineProfile&&!onlineMode){const t=$('t1-name');if(t&&t.value==='real madrid')t.value=onlineProfile.username+' FC';}};
+
+  async function init(){
+    try{
+      $('login-password')?.addEventListener('keydown',e=>{if(e.key==='Enter')loginPlayer();});
+      $('login-username')?.addEventListener('keydown',e=>{if(e.key==='Enter')$('login-password').focus();});
+      setInterval(()=>{if(onlineUser&&$('screen-online').classList.contains('active'))loadInvites();},5000);
+      if(!ensureSupabaseClient()){showGuestLanding();return;}   // أوفلاين / مفيش نت: روح للعب المحلي
+      const {data}=await sb.auth.getSession();
+      if(data?.session?.user){
+        const uid=data.session.user.id;
+        if(await loadOnlineProfile(uid)){
+          let room=null;const rid=localStorage.getItem('fifa_current_room_'+uid);
+          if(rid){const r=await sb.from('rooms').select('*').eq('id',rid).eq('status','waiting').maybeSingle();room=r.data;}
+          if(room){await sb.from('room_players').upsert({room_id:room.id,user_id:uid,ready:false},{onConflict:'room_id,user_id'});await enterRoom(room);}
+          else showOnlineLobby();
+        }
+      }
+      sb.auth.onAuthStateChange((ev)=>{if(ev==='SIGNED_OUT'){onlineUser=null;onlineProfile=null;currentRoom=null;showScreen('screen-auth');}});
+    }catch(e){console.error('initOnline',e);showGuestLanding();}
+  }
+
+  window.createOnlineRoom=createRoom;window.joinOnlineRoom=joinRoom;window.enterRoom=enterRoom;
+  window.leaveOnlineRoom=()=>leave();window.toggleReady=toggleReady;window.startOnlineGame=startGame;
+  window.confirmOnlineSetup=confirmSetup;
+  init();
+})();
+
+</script>
+</body>
+</html>

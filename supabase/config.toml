@@ -1,0 +1,10 @@
+project_id = "YOUR_PROJECT_REF"
+
+[functions.login-with-username]
+verify_jwt = false
+
+[functions.simulate-match]
+verify_jwt = true
+
+[functions.finish-match]
+verify_jwt = true
