@@ -1,6 +1,6 @@
 // Public client settings only. Never paste a Supabase secret/service_role key here.
-export const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-export const SUPABASE_PUBLISHABLE_KEY = 'YOUR_SUPABASE_PUBLISHABLE_KEY';
+export const SUPABASE_URL = 'https://iknnvmmllcnbtojvoivk.supabase.co';
+export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ITpWzG9w3RZiXSTi4y4tbw_UU2kEdlW';
 export const APP_URL = window.location.origin;
 export const IS_SUPABASE_CONFIGURED = Boolean(
   SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY &&
