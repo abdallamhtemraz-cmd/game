@@ -1,0 +1,9 @@
+{
+  "name":"MIND ARENA",
+  "short_name":"MIND ARENA",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#07080d",
+  "theme_color":"#090a10",
+  "icons":[]
+}

@@ -1,0 +1,37 @@
+MIND ARENA — FILE MAP
+
+index.html                         App entry
+styles.css                         Premium responsive UI
+js/config.js                       Supabase URL + publishable key placeholders
+js/supabase.js                     Supabase client
+js/auth.js                         Email/password + username + Google/Apple OAuth
+js/realtime.js                     Realtime room subscriptions
+js/rooms.js                        Online rooms + FIFA/Auction/Lebes online gameplay
+js/engine.js                       Shared match simulation / utilities
+js/app.js                          Main application router and profile/dashboard
+
+data/players.js                    Player + coach database
+
+games/fifa/fifa.js                 New modular FIFA Game
+ games/fifa/original/...html       Preserved latest FIFA source from the saved project
+
+games/auction/auction.js           Offline virtual auction
+ games/lebes-sahbak/lebes.js       Offline box game
+
+offline/local-game.js              Offline party helper
+
+supabase/schema.sql                Full database schema, RLS, RPCs, Realtime setup
+supabase/policies.sql              Policy notes
+supabase/functions/login-with-username/index.ts
+supabase/functions/simulate-match/index.ts
+supabase/functions/finish-match/index.ts
+supabase/functions/_shared/cors.ts
+
+SETUP.md                           Setup instructions
+README.md                          Project overview
+DOMAIN-SETUP.txt                   Production domain checklist
+vercel.json                        Static deployment rewrite
+robots.txt                         Search crawler rules placeholder
+sitemap.xml                        Sitemap placeholder
+manifest.json                      PWA manifest
+.gitignore                         Git ignore rules

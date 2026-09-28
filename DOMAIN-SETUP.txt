@@ -1,0 +1,7 @@
+AFTER BUYING YOUR DOMAIN
+
+1. Point the domain to your production frontend host.
+2. Set the exact HTTPS domain as the Supabase Auth Site URL.
+3. Add the same HTTPS domain to the Supabase Redirect URLs allow-list.
+4. Replace YOUR-DOMAIN.com in robots.txt and sitemap.xml.
+5. Add https://YOUR-DOMAIN.com to Google Search Console and submit /sitemap.xml.

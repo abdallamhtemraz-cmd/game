@@ -1,0 +1,20 @@
+MIND ARENA - Edge Function fix
+
+1) Put this folder in the Supabase project:
+   supabase/config.toml
+
+2) Change YOUR_PROJECT_REF to the reference from:
+   Supabase Dashboard -> Project Settings -> General -> Reference ID
+
+3) Deploy the functions again:
+   supabase functions deploy login-with-username --project-ref YOUR_PROJECT_REF
+   supabase functions deploy simulate-match --project-ref YOUR_PROJECT_REF
+   supabase functions deploy finish-match --project-ref YOUR_PROJECT_REF
+
+4) In Supabase Dashboard -> Edge Functions make sure these 3 functions exist.
+
+5) In js/config.js use:
+   export const SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
+   export const SUPABASE_PUBLISHABLE_KEY = 'YOUR_PUBLISHABLE_KEY';
+
+Never put the service_role key in GitHub.
